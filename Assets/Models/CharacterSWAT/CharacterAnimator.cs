@@ -6,8 +6,11 @@ public class CharacterAnimator : MonoBehaviour
 {
     private Rigidbody _rigidbody;
     private Animator _animator;
-    private float _speedX;
-    private float _speedZ;
+    private float _speedHorizontal;
+    private float _speedVertical;
+
+    private readonly string STR_HORIZONTAL = "Horizontal";
+    private readonly string STR_VETRICAL = "Vertical";
 
 
     void Start()
@@ -18,12 +21,15 @@ public class CharacterAnimator : MonoBehaviour
 
     void Update()
     {
-        _speedX = _rigidbody.velocity.x;
-        _speedZ = _rigidbody.velocity.z;
+        _speedHorizontal= _rigidbody.velocity.x;
+        _speedVertical = _rigidbody.velocity.z;
+        PlayStrafeAnimations();
     }
 
-    void FixedUpdate()
+    private void PlayStrafeAnimations()
     {
-
+        _animator.SetFloat(STR_HORIZONTAL, _speedHorizontal);
+        _animator.SetFloat(STR_VETRICAL, _speedVertical);
+        _animator.SetFloat("Speed", 1);
     }
 }
