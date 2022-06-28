@@ -1,24 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
     private Animator _animator;
+
     private float _speedHorizontal;
     private float _speedVertical;
-    private float _lengthVelocityVector;
 
-
-    private readonly string STR_HORIZONTAL = "Horizontal";
-    private readonly string STR_VETRICAL = "Vertical";
 
 
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
     }
 
@@ -29,25 +21,23 @@ public class CharacterAnimator : MonoBehaviour
 
     void FixedUpdate()
     {
-        //_speedHorizontal = _rigidbody.velocity.x;
-        //_speedVertical = _rigidbody.velocity.z;
-        _speedHorizontal = Input.GetAxis(STR_HORIZONTAL);
-        _speedVertical = Input.GetAxis(STR_VETRICAL);
+        InputAxis();
+        _animator.speed = GetCurrenSpeed(_speedHorizontal, _speedVertical);
+    }
 
-        _lengthVelocityVector = _rigidbody.velocity.magnitude;
-
-
-        _animator.speed = CurrenSpeed(_speedHorizontal, _speedVertical);
-        Debug.Log("Speeed: " + _animator.speed);
+    private void InputAxis()
+    {
+        _speedHorizontal = Input.GetAxis("Horizontal");
+        _speedVertical = Input.GetAxis("Vertical");
     }
 
     private void PlayStrafeAnimations()
     {
-        _animator.SetFloat(STR_HORIZONTAL, _speedHorizontal);
-        _animator.SetFloat(STR_VETRICAL, _speedVertical);
+        _animator.SetFloat("Horizontal", _speedHorizontal);
+        _animator.SetFloat("Vertical", _speedVertical);
     }
 
-    private float CurrenSpeed(float speedHorizontal, float speedVertical)
+    private float GetCurrenSpeed(float speedHorizontal, float speedVertical)
     {
         speedHorizontal = Mathf.Abs(speedHorizontal);
         speedVertical = Mathf.Abs(speedVertical);
