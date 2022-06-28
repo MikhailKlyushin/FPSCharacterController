@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
+    [SerializeField] private Transform _target;
+
     public enum RotationAxes
     {
         MouseXAndY = 0,
@@ -21,6 +23,7 @@ public class MouseLook : MonoBehaviour
     public float maximumVertical = 45f;
 
     private float _rotationX = 0;
+    private float _rotationY;
 
     void Start()
     {
@@ -32,6 +35,8 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
+        transform.position = _target.transform.position;
+
         if (Axes == RotationAxes.MouseX)
         {
             transform.Rotate(0, Input.GetAxis("Mouse X") * sensivityHorisontal, 0);
@@ -44,6 +49,7 @@ public class MouseLook : MonoBehaviour
             float rotationY = transform.localEulerAngles.y;
 
             transform.localEulerAngles = new Vector3(_rotationX, rotationY, 0);
+            _target.transform.rotation = Quaternion.Euler(0, rotationY, 0);
         }
         else
         {
