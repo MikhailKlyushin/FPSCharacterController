@@ -7,19 +7,17 @@ public class CharacterAnimator : MonoBehaviour
     private float _speedHorizontal;
     private float _speedVertical;
 
-
-
-    void Start()
+    private void Start()
     {
         _animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
         PlayStrafeAnimations();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         InputAxis();
         _animator.speed = GetCurrenSpeed(_speedHorizontal, _speedVertical);
@@ -42,13 +40,6 @@ public class CharacterAnimator : MonoBehaviour
         speedHorizontal = Mathf.Abs(speedHorizontal);
         speedVertical = Mathf.Abs(speedVertical);
 
-        if (speedHorizontal >= speedVertical)
-        {
-            return speedHorizontal;
-        }
-        else
-        {
-            return speedVertical;
-        }
+        return Mathf.Max(speedVertical, speedHorizontal);
     }
 }

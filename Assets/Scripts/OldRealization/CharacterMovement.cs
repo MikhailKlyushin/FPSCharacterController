@@ -40,7 +40,7 @@ public class CharacterMovement : MonoBehaviour
         _verticalPosition = Input.GetAxis("Vertical");
         _positionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
         _positionToMove = transform.TransformDirection(_positionToMove);
-        Vector3.Normalize(_positionToMove);
+        _positionToMove = Vector3.Normalize(_positionToMove);
         _rigidbody.velocity = _positionToMove * MoveSpeed;
     }
 
