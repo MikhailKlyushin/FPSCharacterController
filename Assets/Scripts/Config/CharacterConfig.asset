@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CharacterConfig
   m_EditorClassIdentifier: 
   _moveSpeed: 5
-  _angularSpeed: 0
+  _angularSpeed: 200
