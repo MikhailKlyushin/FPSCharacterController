@@ -11,10 +11,7 @@ public class InputKeyAndMouse : IInputProvider
     private float _rotationPositionY;
     private Vector3 _positionToRotate;
 
-
-
     public event IInputProvider.InputHandler InputNotify;
-
 
 
     async public void UpdateInput() // вынести в другой класс
@@ -24,13 +21,13 @@ public class InputKeyAndMouse : IInputProvider
             _horizontalPosition = Input.GetAxis("Horizontal");
             _verticalPosition = Input.GetAxis("Vertical");
 
-            _rotationPositionX -= Input.GetAxis("Mouse Y");
+            _rotationPositionX = Input.GetAxis("Mouse Y");
             _rotationPositionY = Input.GetAxis("Mouse X");
+
 
             SetMoveAndRotatePosition();
 
-            await Task.Delay(100);
-            Debug.Log("Process active");
+            await Task.Delay(20);
         }
     }
 
