@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ICharacter
-{
-    CharacterModel CharacterModel { get;}
 
-}
-
+/*
 public class Player : ICharacter
 {
     public CharacterModel CharacterModel => _characterModel;
@@ -17,17 +13,14 @@ public class Player : ICharacter
     {
         _characterModel = new CharacterModel(factory.CreateMovement());
     }
-}
+}*/
 
-public interface ICharacterFactory
-{
-    public InputProvider CreateMovement();
-}
 
 public class PlayerFactory : ICharacterFactory
 {
-    public InputProvider CreateMovement()
+    public CharacterModel CreateCharacter()
     {
-        return new InputProvider();
+        CharacterModel characterModel = new CharacterModel(new InputKeyAndMouse());
+        return characterModel;
     }
 }

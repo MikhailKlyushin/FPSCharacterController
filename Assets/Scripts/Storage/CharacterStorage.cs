@@ -5,34 +5,35 @@ using UnityEngine;
 
 public class CharacterStorage
 {
-    private List<ICharacter> _characters = new List<ICharacter>();
+    private List<CharacterModel> _characters = new List<CharacterModel>();
 
     public int Count => _characters.Count;
 
-    public ICharacter GetChatacter(Guid characterID)
+
+    public CharacterModel GetChatacterModel(Guid characterID)
     {
         foreach (var item in _characters)
         {
-            if (item.CharacterModel.CharacterID == characterID)
+            if (item.CharacterID == characterID)
             {
                 return item;
             }
         }
         
         Debug.Log("CharacterStorage.cs: Персонажа с таким ID не существует!");
-        return new Player(new PlayerFactory());    // переписать
+        return new CharacterModel();    // переписать через обработчик ошибок?
     }
 
-    public void AddCharacter(ICharacter character)
+    public void AddCharacterModel(CharacterModel model)
     {
-        _characters.Add(character);
+        _characters.Add(model);
     }
 
-    public void RemoveCharacter(Guid characterID)
+    public void RemoveCharacterModel(Guid characterID)
     {
         foreach (var item in _characters)
         {
-            if (item.CharacterModel.CharacterID == characterID)
+            if (item.CharacterID == characterID)
             {
                 _characters.Remove(item);
                 Debug.Log("CharacterStorage.cs: Персонажа с таким ID успешно удален!");
