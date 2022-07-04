@@ -34,9 +34,10 @@ public class CharacterModel
     public float minimumVertical = -45f;
     public float maximumVertical = 45f;
 
-    public Vector3 DirectionVector;
+    private Vector3 _directionVector;
+    public Vector3 DirectionVector => _directionVector;
 
-    private float _moveSpeed = 3;
+    private float _moveSpeed = 6;
     public float MoveSpeed => _moveSpeed;
 
 
@@ -47,8 +48,6 @@ public class CharacterModel
 
     public CharacterModel(IInputProvider input)
     {
-        //SetStartPosition();
-
         _inputProvider = input;
         _inputProvider.InputNotify += ChangeCharacterPosition;
         _inputProvider.UpdateInput();   // запуск асинхронного метода
@@ -60,29 +59,24 @@ public class CharacterModel
     private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
     {
         _positionToMove = positionToMove;
-        DirectionVector = positionToMove;
-
+        _directionVector = positionToMove;
         _positionToRotate = positionToRotate;
 
         MoveToPosition();
         RotateToPosition();
-
-        //Debug.Log("rotate: " + _positionToRotate);
-        //Debug.Log("velocity: " + _velocity);
     }
 
     private void MoveToPosition()
     {
         _positionToMove = _character.transform.TransformDirection(_positionToMove);
-        //_positionToMove = Vector3.Normalize(_positionToMove);     // появляется инпут лаг
-        _velocity = _positionToMove * _moveSpeed;
-        //_velocity = NormalizeVelocity(_velocity);
+        _velocity = _positionToMove;
+        _velocity = Vector3.Normalize(_velocity);
+        _velocity = _velocity * _moveSpeed;
     }
 
     private Vector3 NormalizeVelocity(Vector3 velocity)
     {
         velocity.x = LimitSpeed(velocity.x);
-        //velocity.y = LimitSpeed(velocity.y);
         velocity.z = LimitSpeed(velocity.z);
         return velocity;
     }
