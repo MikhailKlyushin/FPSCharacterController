@@ -1,13 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "CharacterConfig", menuName = "Configuration Script/Character Config", order = 1)]
+
 public class CharacterConfig : ScriptableObject
 {
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _angularSpeed;
+    #region [SerializeField]
+
+    [SerializeField] private float _moveSpeed = 3;
+
+    [SerializeField] private float _sensivityHorisontal = 20f;
+    [SerializeField] private float _sensivityVertical = 20f;
+
+    [SerializeField] private float _minimumVerticalAngle = -45f;
+    [SerializeField] private float _maximumVerticalAngle = 45f;
+
+    #endregion
+
 
     public float MoveSpeed => _moveSpeed;
-    public float AngularSpeed => _angularSpeed;
+    public float SensivityHorizontal => _sensivityHorisontal;
+    public float SensivityVertical => _sensivityVertical;
+    public float MinimumVerticalAngle => _minimumVerticalAngle;
+    public float MaximumVerticalAngle => _maximumVerticalAngle;
+
 }

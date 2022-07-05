@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8957922d03f0ddc42908021c71f8dddc, type: 3}
-  m_Name: CharacterConfig
+  m_Name: PlayerConfig
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
-  _angularSpeed: 200
+  _moveSpeed: 4
+  _sensivityHorisontal: 20
+  _sensivityVertical: 20
+  _minimumVerticalAngle: -45
+  _maximumVerticalAngle: 45

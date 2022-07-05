@@ -1,59 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class CharacterView : MonoBehaviour
 {
-
-   // private readonly CharacterService _playerService = new CharacterService();
-    private CharacterModel _characterModel;
+    private CharacterModel _model;
     private Rigidbody _rigidbody;
     private Animator _animator;
 
-    private float _speedHorizontal;
-    private float _speedVertical;
+    private float _directionHorizontal;
+    private float _directionVertical;
+
 
     public void SetModel(CharacterModel model)
     {
-        _characterModel = model;
+        _model = model;
     }
 
     private void Start()
     {
-        //_characterModel = _playerService.CreatePlayer();
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        PlayStrafeAnimations();
+        RunStrafeAnimations();
     }
 
     private void FixedUpdate()
     {
-        _rigidbody.velocity = _characterModel.Velocity;
-        transform.localEulerAngles = _characterModel.LocalRotateAngleY;
-
-        _speedHorizontal = _characterModel.DirectionVector.x;
-        _speedVertical = _characterModel.DirectionVector.z;
-
-
-        _animator.speed = 6f;
-        Debug.DrawRay(transform.position, _characterModel.Velocity, Color.green);
+        UpdateViewModel();
     }
 
-    private float GetCurrenSpeed(float speedHorizontal, float speedVertical)
+    private void UpdateViewModel()
     {
-        speedHorizontal = Mathf.Abs(speedHorizontal);
-        speedVertical = Mathf.Abs(speedVertical);
+        _rigidbody.velocity = _model.Velocity;
+        transform.localEulerAngles = _model.LocalRotateAngleY;
 
-        return Mathf.Max(speedVertical, speedHorizontal);
+        _directionHorizontal = _model.InputVector.x;
+        _directionVertical = _model.InputVector.z;
+
+        _animator.speed = _model.MoveSpeed;
+
+        Debug.DrawRay(transform.position, _model.Velocity, Color.green);
     }
 
-    private void PlayStrafeAnimations()
+    private void RunStrafeAnimations()
     {
-        _animator.SetFloat("Horizontal", _speedHorizontal);
-        _animator.SetFloat("Vertical", _speedVertical);
+        _animator.SetFloat("Horizontal", _directionHorizontal);
+        _animator.SetFloat("Vertical", _directionVertical);
     }
 }

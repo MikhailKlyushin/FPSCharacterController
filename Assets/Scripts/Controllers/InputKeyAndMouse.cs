@@ -7,8 +7,8 @@ public class InputKeyAndMouse : IInputProvider
     private float _verticalPosition;
     private Vector3 _positionToMove;
 
-    private float _rotationPositionX;
-    private float _rotationPositionY;
+    private float _rotationX;
+    private float _rotationY;
     private Vector3 _positionToRotate;
 
     public event IInputProvider.InputHandler InputNotify;
@@ -21,8 +21,8 @@ public class InputKeyAndMouse : IInputProvider
             _horizontalPosition = Input.GetAxis("Horizontal");
             _verticalPosition = Input.GetAxis("Vertical");
 
-            _rotationPositionX = Input.GetAxis("Mouse Y");
-            _rotationPositionY = Input.GetAxis("Mouse X");
+            _rotationX = Input.GetAxis("Mouse Y");
+            _rotationY = Input.GetAxis("Mouse X");
 
 
             SetMoveAndRotatePosition();
@@ -37,16 +37,14 @@ public class InputKeyAndMouse : IInputProvider
             (_verticalPosition <= 0.2f))
         {
             _positionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
-            _positionToRotate = new Vector3(_rotationPositionX, _rotationPositionY, 0);
+            _positionToRotate = new Vector3(_rotationX, _rotationY, 0);
             InputNotify?.Invoke(_positionToMove, _positionToRotate);
         }
         else
         {
             _positionToMove = new Vector3(0, 0, 0);
-            _positionToRotate = new Vector3(_rotationPositionX, _rotationPositionY, 0);
+            _positionToRotate = new Vector3(_rotationX, _rotationY, 0);
             InputNotify?.Invoke(_positionToMove, _positionToRotate);
         }
     }
-
-
 }

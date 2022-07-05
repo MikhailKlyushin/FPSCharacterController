@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,17 +11,26 @@ public class CharacterStorage
 
     public CharacterModel GetChatacterModel(Guid characterID)
     {
-        foreach (var item in _characters)
+        try
         {
-            if (item.CharacterID == characterID)
+            foreach (var item in _characters)
             {
-                return item;
+                if (item.CharacterID == characterID)
+                {
+                    return item;
+                }
             }
+
+            throw new Exception("CharacterStorage.cs: Character with this ID not found!");
+
         }
-        
-        Debug.Log("CharacterStorage.cs: Персонажа с таким ID не существует!");
-        return new CharacterModel();    // переписать через обработчик ошибок?
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            return null;
+        }
     }
+
 
     public void AddCharacterModel(CharacterModel model)
     {
@@ -36,11 +44,11 @@ public class CharacterStorage
             if (item.CharacterID == characterID)
             {
                 _characters.Remove(item);
-                Debug.Log("CharacterStorage.cs: Персонажа с таким ID успешно удален!");
+                Debug.Log("CharacterStorage.cs: Character with this ID successfully deleted!");
             }
             else
             {
-                Debug.Log("CharacterStorage.cs: Удаление произошло с ошибкой, персонажа с таким ID не существует!");
+                Debug.Log("CharacterStorage.cs: Error deleting a character, a character with such an ID does not exist!");
             }
 
         }

@@ -1,22 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InicializationPlayer : MonoBehaviour
 {
-    [SerializeField] private CharacterView _view;
+    [SerializeField] private CharacterView _characterView;
+    [SerializeField] private CharacterCameraView _characterCamera;
+    [SerializeField] private Transform targetForCamera;
 
-    private Transform _spawnPoints;
-
-    private CharacterService _playerService = new CharacterService();
-    private CharacterModel _characterModel;
+    private readonly CharacterService _playerService = new CharacterService();
+    private CharacterModel _playerModel;
 
     void Start()
     {
-        _characterModel = _playerService.CreatePlayer();
-        _view.SetModel(_characterModel);
-    }
+        _playerModel = _playerService.CreatePlayer();
+        _characterView.SetModel(_playerModel);
 
-   
+        _characterCamera.SetModel(_playerModel);
+        _characterCamera.SetTarget(targetForCamera);
+    }
 }

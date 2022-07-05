@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 public class CharacterService
 {
@@ -22,10 +20,4 @@ public class CharacterService
 
         return playerModel;
     }
-
-    //public CharacterView AddCharacterView(CharacterModel model)
-    //{
-    //    CharacterView characterView = new CharacterView(model);
-    //    return characterView;
-    //}
 }
