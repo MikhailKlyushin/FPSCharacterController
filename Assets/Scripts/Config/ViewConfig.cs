@@ -12,6 +12,6 @@ public class ViewConfig : ScriptableObject
 
     #endregion
 
-
+    //TODO: It's not using
     public GameObject Prefab => _prefab;
 }

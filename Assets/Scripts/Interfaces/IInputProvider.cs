@@ -5,5 +5,8 @@ public interface IInputProvider
     public delegate void InputHandler(Vector3 movePosition, Vector3 rotatePosition);
 
     public event InputHandler InputNotify;
-    void UpdateInput();     // в объявлении добавить async
+    
+    //TODO: It's not using
+    void UpdateInput();     // пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ async
 }
+

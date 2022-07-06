@@ -6,6 +6,7 @@ public class CharacterService
 {
     private readonly CharacterStorage _storage = new CharacterStorage();
 
+    //TODO: It's not using
     public CharacterModel GetChatacter(Guid characterID)
     {
         return _storage.GetChatacterModel(characterID);
@@ -31,6 +32,8 @@ public class CharacterService
     public GameObject CreateViewCharacter(CharacterModel playerModel)
     {
         string pathToPrefab = "Prefabs/CharacterSWAT";
+        
+        //TODO: For what did you create the ViewConfig?
         GameObject prefab = Resources.Load<GameObject>(pathToPrefab);
 
         CharacterViewFactory viewFactory = new CharacterViewFactory();

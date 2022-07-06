@@ -10,7 +10,7 @@ public class CharacterView : MonoBehaviour
     private float _directionHorizontal;
     private float _directionVertical;
 
-
+    //TODO: Initialize()
     public GameObject InicializateView(CharacterModel model, GameObject characterPrefab)
     {
         GameObject instanceObject = Instantiate(characterPrefab, new Vector3(), new Quaternion());
@@ -57,6 +57,7 @@ public class CharacterView : MonoBehaviour
 
     private void RunStrafeAnimations()
     {
+        //TODO: cache this: private static readonly int _horizontal = Animator.StringToHash("Horizontal"); by example
         _animator.SetFloat("Horizontal", _directionHorizontal);
         _animator.SetFloat("Vertical", _directionVertical);
     }
