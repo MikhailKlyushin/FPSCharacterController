@@ -13,6 +13,11 @@ public class InputKeyAndMouse : IInputProvider
 
     public event IInputProvider.InputHandler InputNotify;
 
+    public InputKeyAndMouse()
+    {
+        this.UpdateInput();   // запуск асинхронного метода
+    }
+
 
     async public void UpdateInput() // вынести в другой класс
     {

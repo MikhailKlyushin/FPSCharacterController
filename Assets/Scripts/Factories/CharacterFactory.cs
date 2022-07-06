@@ -1,10 +1,8 @@
 public class PlayerFactory : ICharacterFactory
 {
-    public CharacterModel CreateCharacter()
+    public CharacterModel CreateCharacter(IInputProvider input, CharacterConfig config)
     {
-        string pathToConfigFile = "Config/PlayerConfig";
-
-        CharacterModel model = new CharacterModel(new InputKeyAndMouse(), pathToConfigFile);
+        CharacterModel model = new CharacterModel(input, config);
 
         return model;
     }

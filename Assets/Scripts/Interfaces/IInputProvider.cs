@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IInputProvider     // возможно переписать на абстрактный класс
+public interface IInputProvider
 {
     public delegate void InputHandler(Vector3 movePosition, Vector3 rotatePosition);
 

@@ -11,15 +11,25 @@ public class CharacterView : MonoBehaviour
     private float _directionVertical;
 
 
+    public GameObject InicializateView(CharacterModel model, GameObject characterPrefab)
+    {
+        GameObject instanceObject = Instantiate(characterPrefab, new Vector3(), new Quaternion());
+        instanceObject.GetComponent<CharacterView>().SetModel(model);
+
+        return instanceObject;
+    }
+
     public void SetModel(CharacterModel model)
     {
         _model = model;
     }
 
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+
     }
 
     private void Update()
@@ -34,7 +44,7 @@ public class CharacterView : MonoBehaviour
 
     private void UpdateViewModel()
     {
-        _rigidbody.velocity = _model.Velocity;
+        _rigidbody.velocity = transform.TransformDirection(_model.Velocity);
         transform.localEulerAngles = _model.LocalRotateAngleY;
 
         _directionHorizontal = _model.InputVector.x;
