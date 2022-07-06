@@ -56,8 +56,7 @@ public class CharacterModel
     
     private void ConnectInputController(IInputProvider input)
     {
-        _input = input;
-        _input.InputNotify += ChangeCharacterPosition;
+        input.InputNotify += ChangeCharacterPosition;
     }
 
 
@@ -89,18 +88,16 @@ public class CharacterModel
 
     private void RotateToPosition()
     {
-        {
-            _rotationPositionX -= _positionToRotate.x * _sensivityVertical;
-            _rotationPositionX = Mathf.Clamp(_rotationPositionX, _minimumVerticalAngle, _maximumVerticalAngle);
+        _rotationPositionX -= _positionToRotate.x * _sensivityVertical;
+        _rotationPositionX = Mathf.Clamp(_rotationPositionX, _minimumVerticalAngle, _maximumVerticalAngle);
 
-            var delta = _positionToRotate.y * _sensivityHorisontal;
-            _rotationPositionY += delta;
+        var delta = _positionToRotate.y * _sensivityHorisontal;
+        _rotationPositionY += delta;
 
-            _rotationVectorX = new Vector3(_rotationPositionX, 0, 0);
+        _rotationVectorX = new Vector3(_rotationPositionX, 0, 0);
 
-            _rotationVectorY = new Vector3(0, _rotationPositionY, 0);
+        _rotationVectorY = new Vector3(0, _rotationPositionY, 0);
 
-            _localRotate = new Vector3(_rotationPositionX, _rotationPositionY, 0);
-        }
+        _localRotate = new Vector3(_rotationPositionX, _rotationPositionY, 0);
     }
 }
