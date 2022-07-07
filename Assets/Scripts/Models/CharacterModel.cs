@@ -66,7 +66,7 @@ public class CharacterModel
 
     private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
     {
-        _inputVector = positionToMove;  // сохран€ем вектор ввода (дл€ управлени€ анимацией)
+        _inputVector = positionToMove;
         _positionToMove = positionToMove;
         _positionToRotate = positionToRotate;
 

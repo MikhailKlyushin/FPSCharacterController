@@ -1,14 +1,15 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CharacterCameraView : MonoBehaviour
 {
     #region Params
 
-    public float _sensivityHorisontal = 9f;
-    public float _sensivityVertical = 9f;
+    [SerializeField] private float sensivityHorisontal = 20f;
+    [SerializeField] private float sensivityVertical = 20f;
 
-    public float _minimumVerticalAngle = -45f;
-    public float _maximumVerticalAngle = 45f;
+    [SerializeField] private float minimumVerticalAngle = -45f;
+    [SerializeField] private float maximumVerticalAngle = 45f;
 
     private float _rotationPositionX;
     private float _rotationPositionY;
@@ -20,11 +21,7 @@ public class CharacterCameraView : MonoBehaviour
     private Transform _targetForCamera;
     private CharacterModel _model;
     private Vector3 _localRotate;
-
-    public void SetModel(CharacterModel model)
-    {
-        _model = model;
-    }
+    
 
     public void SetTarget(Transform target)
     {
@@ -44,10 +41,11 @@ public class CharacterCameraView : MonoBehaviour
             Vector3 SmoothVector = Vector3.Lerp(transform.position, Position, _smoothSpeed);
             transform.position = SmoothVector;
 
-            transform.localEulerAngles = _model.LocalRotate;
-        }
-        else
+            //transform.localEulerAngles = _model.LocalRotate;
             transform.localEulerAngles = _localRotate;
+        }
+        // else
+        //     transform.localEulerAngles = _localRotate;
     }
 
 
@@ -58,10 +56,10 @@ public class CharacterCameraView : MonoBehaviour
 
     private Vector3 RotateToPosition(Vector3 positionToRotate)
     {
-        _rotationPositionX -= positionToRotate.x * _sensivityVertical;
-        _rotationPositionX = Mathf.Clamp(_rotationPositionX, _minimumVerticalAngle, _maximumVerticalAngle);
+        _rotationPositionX -= positionToRotate.x * sensivityVertical;
+        _rotationPositionX = Mathf.Clamp(_rotationPositionX, minimumVerticalAngle, maximumVerticalAngle);
 
-        var delta = positionToRotate.y * _sensivityHorisontal;
+        var delta = positionToRotate.y * sensivityHorisontal;
         _rotationPositionY += delta;
 
 

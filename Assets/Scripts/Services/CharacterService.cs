@@ -1,15 +1,14 @@
 using System;
 using UnityEngine;
-using Zenject;
+using Object = UnityEngine.Object;
 
 
 public class CharacterService
 {
     private readonly CharacterStorage _characterStorage = new CharacterStorage();
     private readonly ViewStorage _viewStorage = new ViewStorage();
-
-    //TODO: It's not using
-    public CharacterModel GetChatacter(Guid characterID)
+    
+    public CharacterModel GetModel(Guid characterID)
     {
         return _characterStorage.GetChatacterModel(characterID);
     }
@@ -24,29 +23,35 @@ public class CharacterService
         _viewStorage.AddCharacterView(view);
     }
 
-
-    public CharacterModel CreatePlayer()
+    public Guid CreatePlayer(IInputProvider playerInput)
     {
-        string pathToPlayerconfig = "Config/PlayerConfig";
-        CharacterConfig playerConfig = Resources.Load<CharacterConfig>(pathToPlayerconfig);
+        var model = CreateModel(playerInput);
+        var view = CreateView(model);
 
-        InputKeyAndMouse playerInput = new InputKeyAndMouse();
+        return model.CharacterID;
+    }
 
-        PlayerFactory playerFactory = new PlayerFactory();
-        CharacterModel playerModel = playerFactory.CreateCharacter(playerInput, playerConfig);
+
+    public CharacterModel CreateModel(IInputProvider playerInput)
+    {
+        const string pathToPlayerConfig = "Config/PlayerConfig";
+        var playerConfig = Resources.Load<CharacterConfig>(pathToPlayerConfig);
+        var playerFactory = new PlayerFactory();
+        var playerModel = playerFactory.CreateCharacter(playerInput, playerConfig);
 
         _characterStorage.AddCharacterModel(playerModel);
-
+        
         return playerModel;
     }
 
-    public CharacterView CreateView()
+    public CharacterView CreateView(CharacterModel model)
     {
-        string pathToPrefab = "Prefabs/CharacterSWAT";
-        CharacterView prefabView = Resources.Load<CharacterView>(pathToPrefab);
+        const string pathToPrefab = "Prefabs/CharacterSWAT";
+        var prefabView = Resources.Load<CharacterView>(pathToPrefab);
+        var playerView = Object.Instantiate(prefabView, new Vector3(), new Quaternion()) as CharacterView;
+        playerView.SetModel(model);
+        _viewStorage.AddCharacterView(playerView);
 
-        _viewStorage.AddCharacterView(prefabView);
-
-        return prefabView;
+        return playerView;
     }
 }

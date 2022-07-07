@@ -15,6 +15,8 @@ public class CharacterView : MonoBehaviour
 
     private float _directionHorizontal;
     private float _directionVertical;
+    private static readonly int Horizontal = Animator.StringToHash("Horizontal");
+    private static readonly int Vertical = Animator.StringToHash("Vertical");
 
     public void SetModel(CharacterModel model)
     {
@@ -52,18 +54,15 @@ public class CharacterView : MonoBehaviour
 
         Debug.DrawRay(transform.position, _model.Velocity, Color.green);
     }
+    
+    
 
-    private static readonly float _horizontal;
-    private static readonly float _vertical;
+    //private static readonly float _horizontal;
+    //private static readonly float _vertical;
 
     private void RunStrafeAnimations()
     {
-        //TODO: cache this: private static readonly int _horizontal = Animator.StringToHash("Horizontal"); by example
-        _animator.SetFloat("Horizontal", _directionHorizontal);
-        _animator.SetFloat("Vertical", _directionVertical);
-        
-        
-        _animator.GetFloat("Horivontal");
-        _animator.GetFloat("Vertical");
+        _animator.SetFloat(Horizontal, _directionHorizontal);
+        _animator.SetFloat(Vertical, _directionVertical);
     }
 }

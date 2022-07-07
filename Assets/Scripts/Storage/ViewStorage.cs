@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ViewStorage : MonoBehaviour
+public class ViewStorage
 {
     private List<CharacterView> _views = new List<CharacterView>();
 

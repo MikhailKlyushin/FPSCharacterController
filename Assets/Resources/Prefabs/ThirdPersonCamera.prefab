@@ -127,3 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f2e7828c0cc3154581c1099e4606e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensivityHorisontal: 20
+  sensivityVertical: 20
+  minimumVerticalAngle: -45
+  maximumVerticalAngle: 45
