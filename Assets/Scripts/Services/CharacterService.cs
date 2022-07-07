@@ -36,8 +36,8 @@ public class CharacterService
     {
         const string pathToPlayerConfig = "Config/PlayerConfig";
         var playerConfig = Resources.Load<CharacterConfig>(pathToPlayerConfig);
-        var playerFactory = new PlayerFactory();
-        var playerModel = playerFactory.CreateCharacter(playerInput, playerConfig);
+        var modelFactory = new PlayerModelFactory();
+        var playerModel = modelFactory.Create(playerInput, playerConfig);
 
         _characterStorage.AddCharacterModel(playerModel);
         
@@ -46,10 +46,10 @@ public class CharacterService
 
     public CharacterView CreateView(CharacterModel model)
     {
-        const string pathToPrefab = "Prefabs/CharacterSWAT";
-        var prefabView = Resources.Load<CharacterView>(pathToPrefab);
-        var playerView = Object.Instantiate(prefabView, new Vector3(), new Quaternion()) as CharacterView;
+        var viewFactory = new PlayerViewFactory();
+        var playerView = viewFactory.Create();
         playerView.SetModel(model);
+        
         _viewStorage.AddCharacterView(playerView);
 
         return playerView;

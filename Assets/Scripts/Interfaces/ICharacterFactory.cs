@@ -1,4 +1,4 @@
 public interface ICharacterFactory
 {
-    public CharacterModel CreateCharacter(IInputProvider input, CharacterConfig config);
+    public CharacterModel Create(IInputProvider input, CharacterConfig config);
 }

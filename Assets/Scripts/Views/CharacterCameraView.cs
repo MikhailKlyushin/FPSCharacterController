@@ -14,12 +14,11 @@ public class CharacterCameraView : MonoBehaviour
     private float _rotationPositionX;
     private float _rotationPositionY;
 
-    private const float _smoothSpeed = 0.15f;
+    private const float SmoothSpeed = 0.15f;
 
     #endregion
 
     private Transform _targetForCamera;
-    private CharacterModel _model;
     private Vector3 _localRotate;
     
 
@@ -37,9 +36,9 @@ public class CharacterCameraView : MonoBehaviour
     {
         if (_targetForCamera != null)
         {
-            Vector3 Position = _targetForCamera.transform.position;
-            Vector3 SmoothVector = Vector3.Lerp(transform.position, Position, _smoothSpeed);
-            transform.position = SmoothVector;
+            Vector3 position = _targetForCamera.transform.position;
+            Vector3 smoothVector = Vector3.Lerp(transform.position, position, SmoothSpeed);
+            transform.position = smoothVector;
 
             //transform.localEulerAngles = _model.LocalRotate;
             transform.localEulerAngles = _localRotate;
