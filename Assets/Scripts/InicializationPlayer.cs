@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+using System.Xml.Xsl;
 using UnityEngine;
 
 public class InicializationPlayer : MonoBehaviour
@@ -13,24 +15,18 @@ public class InicializationPlayer : MonoBehaviour
 
     private void CameraTrackingMode()
     {
-        var _playerModel = _playerService.CreatePlayer();
-        
-        //TODO: It must be in _playerService.CreatePlayer method
-        var player = _playerService.CreateViewCharacter(_playerModel);
+        var playerModel = _playerService.CreatePlayer();
+        var loadView = _playerService.CreateView();
+        var playerView = Instantiate(loadView, new Vector3(), new Quaternion()) as CharacterView;
+        playerView.SetModel(playerModel);
+        _playerService.AddViewStorage(playerView);
 
-        var camera = Instantiate(_characterCamera);
-        
-        //Refactor this!
-        camera.SetModel(_playerModel);
-        
-        //TODO: To get player's view you need put it in ViewStorage, then get model's id and get view by this id
-        camera.SetTarget(player.transform);
-    }
 
-    //TODO: It's not using
-    private void FreeCameraMode()
-    {
+        ////Refactor this!
         var camera = Instantiate(_characterCamera);
-        camera.SetInput(new InputKeyAndMouse());
+        camera.SetModel(playerModel);
+
+        ////TODO: To get player's view you need put it in ViewStorage, then get model's id and get view by this id
+        camera.SetTarget(playerView.transform);
     }
 }

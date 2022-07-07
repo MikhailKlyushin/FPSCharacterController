@@ -1,15 +1,27 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 
 public class CharacterService
 {
-    private readonly CharacterStorage _storage = new CharacterStorage();
+    private readonly CharacterStorage _characterStorage = new CharacterStorage();
+    private readonly ViewStorage _viewStorage = new ViewStorage();
 
     //TODO: It's not using
     public CharacterModel GetChatacter(Guid characterID)
     {
-        return _storage.GetChatacterModel(characterID);
+        return _characterStorage.GetChatacterModel(characterID);
+    }
+
+    public CharacterView GetView(Guid characterID)
+    {
+        return _viewStorage.GetChatacterModel(characterID);
+    }
+
+    public void AddViewStorage(CharacterView view)
+    {
+        _viewStorage.AddCharacterView(view);
     }
 
 
@@ -23,21 +35,18 @@ public class CharacterService
         PlayerFactory playerFactory = new PlayerFactory();
         CharacterModel playerModel = playerFactory.CreateCharacter(playerInput, playerConfig);
 
-
-        _storage.AddCharacterModel(playerModel);
+        _characterStorage.AddCharacterModel(playerModel);
 
         return playerModel;
     }
 
-    public GameObject CreateViewCharacter(CharacterModel playerModel)
+    public CharacterView CreateView()
     {
         string pathToPrefab = "Prefabs/CharacterSWAT";
-        
-        //TODO: For what did you create the ViewConfig?
-        GameObject prefab = Resources.Load<GameObject>(pathToPrefab);
+        CharacterView prefabView = Resources.Load<CharacterView>(pathToPrefab);
 
-        CharacterViewFactory viewFactory = new CharacterViewFactory();
+        _viewStorage.AddCharacterView(prefabView);
 
-        return viewFactory.CreateView(playerModel, prefab);
+        return prefabView;
     }
 }

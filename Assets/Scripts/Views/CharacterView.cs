@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 
 
 public class CharacterView : MonoBehaviour
 {
+    public Guid CharacterID => _characterID;
+
+
+    private Guid _characterID;
+
     private CharacterModel _model;
     private Rigidbody _rigidbody;
     private Animator _animator;
@@ -10,17 +16,9 @@ public class CharacterView : MonoBehaviour
     private float _directionHorizontal;
     private float _directionVertical;
 
-    //TODO: Initialize()
-    public GameObject InicializateView(CharacterModel model, GameObject characterPrefab)
-    {
-        GameObject instanceObject = Instantiate(characterPrefab, new Vector3(), new Quaternion());
-        instanceObject.GetComponent<CharacterView>().SetModel(model);
-
-        return instanceObject;
-    }
-
     public void SetModel(CharacterModel model)
     {
+        _characterID = model.CharacterID;
         _model = model;
     }
 
@@ -55,10 +53,17 @@ public class CharacterView : MonoBehaviour
         Debug.DrawRay(transform.position, _model.Velocity, Color.green);
     }
 
+    private static readonly float _horizontal;
+    private static readonly float _vertical;
+
     private void RunStrafeAnimations()
     {
         //TODO: cache this: private static readonly int _horizontal = Animator.StringToHash("Horizontal"); by example
         _animator.SetFloat("Horizontal", _directionHorizontal);
         _animator.SetFloat("Vertical", _directionVertical);
+        
+        
+        _animator.GetFloat("Horivontal");
+        _animator.GetFloat("Vertical");
     }
 }
