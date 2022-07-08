@@ -39,12 +39,10 @@ public class CharacterCameraView : MonoBehaviour
             Vector3 position = _targetForCamera.transform.position;
             Vector3 smoothVector = Vector3.Lerp(transform.position, position, SmoothSpeed);
             transform.position = smoothVector;
-
-            //transform.localEulerAngles = _model.LocalRotate;
             transform.localEulerAngles = _localRotate;
         }
-        // else
-        //     transform.localEulerAngles = _localRotate;
+        else
+            transform.localEulerAngles = _localRotate;
     }
 
 

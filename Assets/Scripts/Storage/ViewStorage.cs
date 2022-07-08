@@ -9,7 +9,7 @@ public class ViewStorage
     public int Count => _views.Count;
 
 
-    public CharacterView GetChatacterModel(Guid characterID)
+    public CharacterView GetChatacterView(Guid characterID)
     {
         try
         {

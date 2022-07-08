@@ -15,11 +15,11 @@ public class InputKeyAndMouse : IInputProvider
 
     public InputKeyAndMouse()
     {
-        this.UpdateInput();   // запуск асинхронного метода
+        this.UpdateInput();
     }
 
 
-    async public void UpdateInput() // вынести в другой класс
+    async public void UpdateInput()
     {
         while (true)
         {

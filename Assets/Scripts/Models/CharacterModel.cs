@@ -32,12 +32,11 @@ public class CharacterModel
 
     private Guid _characterID = Guid.NewGuid();
 
-    private IInputProvider _input;
+    //private IInputProvider _input;
 
     private Vector3 _localRotate;
     private Vector3 _rotationVectorX;
     private Vector3 _rotationVectorY;
-
 
     public CharacterModel(IInputProvider inputController, CharacterConfig config)
     {

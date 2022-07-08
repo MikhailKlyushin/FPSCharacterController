@@ -1,9 +1,17 @@
-public class PlayerModelFactory : ICharacterFactory
-{
-    public CharacterModel Create(IInputProvider input, CharacterConfig config)
-    {
-        CharacterModel model = new CharacterModel(input, config);
+using Zenject;
 
-        return model;
+public class PlayerModelFactory : PlaceholderFactory<CharacterModel>
+{
+    private readonly DiContainer _container;
+
+    public PlayerModelFactory(DiContainer container)
+    {
+        _container = container;
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    public override CharacterModel Create()
+    {
+        return _container.Instantiate<CharacterModel>();
     }
 }

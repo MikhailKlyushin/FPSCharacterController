@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 
 public class CharacterView : MonoBehaviour
@@ -17,13 +18,12 @@ public class CharacterView : MonoBehaviour
     private float _directionVertical;
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
-
+    
     public void SetModel(CharacterModel model)
     {
-        _characterID = model.CharacterID;
         _model = model;
+        _characterID = model.CharacterID;
     }
-
 
     private void Start()
     {
@@ -54,11 +54,6 @@ public class CharacterView : MonoBehaviour
 
         Debug.DrawRay(transform.position, _model.Velocity, Color.green);
     }
-    
-    
-
-    //private static readonly float _horizontal;
-    //private static readonly float _vertical;
 
     private void RunStrafeAnimations()
     {
