@@ -78,7 +78,7 @@ public class CharacterModel
     private void MoveToPosition()
     {
         _velocity = _positionToMove;
-        _velocity.x += _positionToRotate.x;
+        //_velocity.x += _positionToRotate.x;
         _velocity *= _moveSpeed;
     }
 
