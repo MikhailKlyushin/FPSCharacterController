@@ -5,10 +5,10 @@ using Zenject;
 
 public class CharacterView : MonoBehaviour
 {
-    public Guid CharacterID => _characterID;
+    public string CharacterID => _characterID;
 
 
-    private Guid _characterID;
+    private string _characterID;
 
     private CharacterModel _model;
     private Rigidbody _rigidbody;

@@ -25,17 +25,33 @@ public class CharacterService
         _playerViewFactory = playerViewFactory;
     }
     
-    public CharacterModel GetModel(Guid characterID)
+    public CharacterModel GetModel(string characterID)
     {
-        return _characterStorage.GetChatacterModel(characterID);
+        var model = _characterStorage.GetChatacterModel(characterID);
+
+        if (model != null)
+        {
+            return model;
+        }
+        
+        Debug.Log("CharacterStorage.cs: Character with this ID not found!");
+        return null;
     }
 
-    public CharacterView GetView(Guid characterID)
+    public CharacterView GetView(string characterID)
     {
-        return _viewStorage.GetChatacterView(characterID);
+        var view = _viewStorage.GetChatacterView(characterID);
+
+        if (view != null)
+        {
+            return view;
+        }
+        
+        Debug.Log("Exception! - CharacterStorage.cs: Character with this ID not found!");
+        return null;
     }
 
-    public Guid CreatePlayer(IInputProvider playerInput)
+    public string CreatePlayer(IInputProvider playerInput)
     {
         var model = CreateModel(playerInput);
         var view = CreateView(model);
@@ -46,6 +62,7 @@ public class CharacterService
 
     public CharacterModel CreateModel(IInputProvider playerInput)
     {
+        //TODO: ask about it 
         const string pathToPlayerConfig = "Config/PlayerConfig";
         var playerConfig = Resources.Load<CharacterConfig>(pathToPlayerConfig);
         var playerModel = _playerModelFactory.Create();

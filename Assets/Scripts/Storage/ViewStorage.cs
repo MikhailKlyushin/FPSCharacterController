@@ -1,34 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ViewStorage
 {
     private List<CharacterView> _views = new List<CharacterView>();
-
     public int Count => _views.Count;
 
-
-    public CharacterView GetChatacterView(Guid characterID)
+    public CharacterView GetChatacterView(string characterID)
     {
-        try
-        {
-            foreach (var item in _views)
-            {
-                if (item.CharacterID == characterID)
-                {
-                    return item;
-                }
-            }
-
-            throw new Exception("CharacterStorage.cs: Character with this ID not found!");
-
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            return null;
-        }
+        return _views.Where(item => item.CharacterID == characterID).FirstOrDefault();
     }
 
 
@@ -37,7 +19,7 @@ public class ViewStorage
         _views.Add(view);
     }
 
-    public void RemoveCharacterView(Guid characterID)
+    public void RemoveCharacterView(string characterID)
     {
         foreach (var item in _views)
         {

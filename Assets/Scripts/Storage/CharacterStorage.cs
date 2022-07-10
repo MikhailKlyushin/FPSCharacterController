@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterStorage
@@ -9,26 +10,9 @@ public class CharacterStorage
     public int Count => _characters.Count;
 
 
-    public CharacterModel GetChatacterModel(Guid characterID)
+    public CharacterModel GetChatacterModel(string characterID)
     {
-        try
-        {
-            foreach (var item in _characters)
-            {
-                if (item.CharacterID == characterID)
-                {
-                    return item;
-                }
-            }
-
-            throw new Exception("CharacterStorage.cs: Character with this ID not found!");
-
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            return null;
-        }
+        return _characters.Where(item => item.CharacterID == characterID).FirstOrDefault();
     }
 
 
@@ -37,7 +21,7 @@ public class CharacterStorage
         _characters.Add(model);
     }
 
-    public void RemoveCharacterModel(Guid characterID)
+    public void RemoveCharacterModel(string characterID)
     {
         foreach (var item in _characters)
         {
