@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 public class CharacterCameraView : MonoBehaviour
 {
@@ -21,16 +22,16 @@ public class CharacterCameraView : MonoBehaviour
 
     private Transform _targetForCamera;
     private Vector3 _localRotate;
-    
+
+    [Inject]
+    private void Construct([Inject(Id = "id")] IInputProvider input)
+    {
+        input.InputNotify += ChangeCharacterPosition;
+    }
 
     public void SetTarget(Transform target)
     {
         _targetForCamera = target;
-    }
-
-    public void SetInput(IInputProvider input)
-    {
-        input.InputNotify += ChangeCharacterPosition;
     }
 
     private void FixedUpdate()

@@ -31,7 +31,6 @@ public class CharacterView : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
-
     }
 
     private void Update()

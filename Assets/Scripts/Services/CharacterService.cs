@@ -9,11 +9,13 @@ public class CharacterService
 
     private readonly PlayerModelFactory _playerModelFactory;
     private readonly PlayerViewFactory _playerViewFactory;
+    private readonly PlayerCameraFactory _playerCameraFactory;
 
     CharacterService
     (
         PlayerModelFactory playerModelFactory, 
         PlayerViewFactory playerViewFactory,
+        PlayerCameraFactory playerCameraFactory,
         CharacterStorage characterStorage, 
         ViewStorage viewStorage
     )
@@ -23,6 +25,7 @@ public class CharacterService
         
         _playerModelFactory = playerModelFactory;
         _playerViewFactory = playerViewFactory;
+        _playerCameraFactory = playerCameraFactory;
     }
     
     public CharacterModel GetModel(string characterID)
@@ -51,18 +54,17 @@ public class CharacterService
         return null;
     }
 
-    public string CreatePlayer(IInputProvider playerInput)
+    public string CreatePlayer()
     {
-        var model = CreateModel(playerInput);
+        var model = CreateModel();
         var view = CreateView(model);
 
         return view.CharacterID;
     }
 
 
-    public CharacterModel CreateModel(IInputProvider playerInput)
+    public CharacterModel CreateModel()
     {
-        //TODO: ask about it 
         const string pathToPlayerConfig = "Config/PlayerConfig";
         var playerConfig = Resources.Load<CharacterConfig>(pathToPlayerConfig);
         var playerModel = _playerModelFactory.Create();
@@ -78,5 +80,11 @@ public class CharacterService
         _viewStorage.AddCharacterView(playerView);
 
         return playerView;
+    }
+
+    public CharacterCameraView CreatePlayerCamera(Transform target)
+    {
+        var playerCamera = _playerCameraFactory.Create(target);
+        return playerCamera;
     }
 }

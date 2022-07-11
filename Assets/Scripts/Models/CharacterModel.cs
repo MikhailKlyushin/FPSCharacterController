@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class CharacterModel
 {
@@ -17,7 +18,7 @@ public class CharacterModel
     private Vector3 _inputVector;
     private Vector3 _rotationVectorY;
     
-    public CharacterModel(IInputProvider inputController, CharacterConfig config)
+    public CharacterModel([Inject(Id = "id")] IInputProvider inputController, CharacterConfig config)
     {
         SetConfigParams(config);
         ConnectInputController(inputController);
