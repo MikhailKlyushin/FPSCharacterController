@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8957922d03f0ddc42908021c71f8dddc, type: 3}
-  m_Name: PlayerConfig
+  m_Script: {fileID: 11500000, guid: b50ff47545592924b8fd2fe5aae8fa46, type: 3}
+  m_Name: ViewConfig
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
-  _sensivityHorisontal: 20
+  _pathToPrefab: Prefabs/CharacterSWAT

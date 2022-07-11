@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8957922d03f0ddc42908021c71f8dddc, type: 3}
-  m_Name: PlayerConfig
+  m_Script: {fileID: 11500000, guid: 9779ec677a36ca74b988a6f2fb63dda4, type: 3}
+  m_Name: CameraConfig
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
+  _pathToPrefab: Prefabs/ThirdPersonCamera
   _sensivityHorisontal: 20
+  _sensivityVertical: 20
+  _minimumVerticalAngle: -45
+  _maximumVerticalAngle: 45
+  _smoothSpeed: 0.15

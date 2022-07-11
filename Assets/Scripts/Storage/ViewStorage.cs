@@ -10,8 +10,7 @@ public class ViewStorage
 
     public CharacterView GetChatacterView(string characterID)
     {
-        //TODO: FIrstOrDefault (Rider's advice)
-        return _views.Where(item => item.CharacterID == characterID).FirstOrDefault();
+        return _views.FirstOrDefault(item => item.CharacterID == characterID);
     }
 
 

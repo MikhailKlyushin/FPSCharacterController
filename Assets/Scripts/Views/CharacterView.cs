@@ -17,9 +17,8 @@ public class CharacterView : MonoBehaviour
     private float _directionHorizontal;
     private float _directionVertical;
     
-    //TODO: _horizontal (not static), trust yourself
-    private static readonly int Horizontal = Animator.StringToHash("Horizontal");
-    private static readonly int Vertical = Animator.StringToHash("Vertical");
+    private readonly int _horizontal = Animator.StringToHash("Horizontal");
+    private readonly int _vertical = Animator.StringToHash("Vertical");
     
     public void SetModel(CharacterModel model)
     {
@@ -58,7 +57,7 @@ public class CharacterView : MonoBehaviour
 
     private void RunStrafeAnimations()
     {
-        _animator.SetFloat(Horizontal, _directionHorizontal);
-        _animator.SetFloat(Vertical, _directionVertical);
+        _animator.SetFloat(_horizontal, _directionHorizontal);
+        _animator.SetFloat(_vertical, _directionVertical);
     }
 }

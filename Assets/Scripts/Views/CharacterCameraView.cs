@@ -4,29 +4,19 @@ using Zenject;
 
 public class CharacterCameraView : MonoBehaviour
 {
-    #region Params
-
-    //TODO: move to config
-    [SerializeField] private float sensivityHorisontal = 20f;
-    [SerializeField] private float sensivityVertical = 20f;
-    [SerializeField] private float minimumVerticalAngle = -45f;
-    [SerializeField] private float maximumVerticalAngle = 45f;
-
     private float _rotationPositionX;
     private float _rotationPositionY;
-
-    //TODO: It's not constant, but config
-    private const float SmoothSpeed = 0.15f;
-
-    #endregion
 
     private Transform _targetForCamera;
     private Vector3 _localRotate;
 
+    private CameraConfig _config;
+
     [Inject]
-    private void Construct([Inject(Id = "id")] IInputProvider input)
+    private void Construct([Inject(Id = "id")] IInputProvider input, CameraConfig config)
     {
         input.InputNotify += ChangeCharacterPosition;
+        _config = config;
     }
 
     public void SetTarget(Transform target)
@@ -39,7 +29,7 @@ public class CharacterCameraView : MonoBehaviour
         if (_targetForCamera != null)
         {
             Vector3 position = _targetForCamera.transform.position;
-            Vector3 smoothVector = Vector3.Lerp(transform.position, position, SmoothSpeed);
+            Vector3 smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
             transform.position = smoothVector;
             transform.localEulerAngles = _localRotate;
         }
@@ -55,10 +45,10 @@ public class CharacterCameraView : MonoBehaviour
 
     private Vector3 RotateToPosition(Vector3 positionToRotate)
     {
-        _rotationPositionX -= positionToRotate.x * sensivityVertical;
-        _rotationPositionX = Mathf.Clamp(_rotationPositionX, minimumVerticalAngle, maximumVerticalAngle);
+        _rotationPositionX -= positionToRotate.x * _config.SensivityVertical;
+        _rotationPositionX = Mathf.Clamp(_rotationPositionX, _config.MinimumVerticalAngle, _config.MaximumVerticalAngle);
 
-        var delta = positionToRotate.y * sensivityHorisontal;
+        var delta = positionToRotate.y * _config.SensivityHorizontal;
         _rotationPositionY += delta;
 
 

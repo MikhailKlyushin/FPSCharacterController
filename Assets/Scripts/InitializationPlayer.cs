@@ -20,19 +20,8 @@ public class InitializationPlayer : MonoBehaviour
     
     private void CameraTrackingMode()
     {
-        //TODO: use Zenject!
-        //var playerInput = new InputKeyAndMouse();
-        
         var playerID = _playerService.CreatePlayer();
-
         var playerView = _playerService.GetView(playerID);
-        
-        //TODO: spawn from Zenject's factory
-       // var cameraView = Instantiate(characterCamera);
-        //cameraView.SetInput(new InputKeyAndMouse());
-
         var cameraView = _playerService.CreatePlayerCamera(playerView.transform);
-        
-        //cameraView.SetTarget(playerView.transform);
     }
 }

@@ -13,12 +13,11 @@ public class CharacterService
 
     CharacterService
     (
+        CharacterStorage characterStorage, 
+        ViewStorage viewStorage,
         PlayerModelFactory playerModelFactory, 
         PlayerViewFactory playerViewFactory,
-        PlayerCameraFactory playerCameraFactory,
-        CharacterStorage characterStorage, 
-        ViewStorage viewStorage
-    )
+        PlayerCameraFactory playerCameraFactory)
     {
         _characterStorage = characterStorage;
         _viewStorage = viewStorage;

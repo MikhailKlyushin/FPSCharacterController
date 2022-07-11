@@ -4,19 +4,19 @@ using Zenject;
 
 public class CharacterModel
 {
-    #region Public params
     public string CharacterID => _characterID;
     public float MoveSpeed => _config.MoveSpeed;
     public Vector3 InputVector => _inputVector;
     public Vector3 LocalRotateAngleY => _rotationVectorY;
     public Vector3 Velocity => _velocity;
-
-    #endregion
+    
 
     private readonly string _characterID = Guid.NewGuid().ToString();
     private CharacterConfig _config;
     private Vector3 _inputVector;
     private Vector3 _rotationVectorY;
+    private Vector3 _velocity;
+    private float _rotationPositionY;
     
     public CharacterModel([Inject(Id = "id")] IInputProvider inputController, CharacterConfig config)
     {
@@ -41,17 +41,12 @@ public class CharacterModel
         MoveToPosition(positionToMove);
         RotateToPosition(positionToRotate);
     }
-    
-    private Vector3 _velocity;
 
     private void MoveToPosition(Vector3 positionToMove)
     {
         _velocity = positionToMove;
         _velocity *= _config.MoveSpeed;
     }
-
-    //TODO: He is so alone(((
-    private float _rotationPositionY;
 
     private void RotateToPosition(Vector3 positionToRotate)
     {

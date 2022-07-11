@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
-//TODO: use ITickable
-public class InputKeyAndMouse : IInputProvider
+public class InputKeyAndMouse : IInputProvider, ITickable
 {
     private float _horizontalPosition;
     private float _verticalPosition;
@@ -12,15 +12,27 @@ public class InputKeyAndMouse : IInputProvider
     private float _rotationY;
     private Vector3 _positionToRotate;
 
+    private float _blindSpot = 0.2f;
+
     public event IInputProvider.InputHandler InputNotify;
 
-    public InputKeyAndMouse()
+    /*public InputKeyAndMouse()
     {
-        this.UpdateInput();
+        //this.UpdateInput();
+    }*/
+    
+    public void Tick()
+    {
+        _horizontalPosition = Input.GetAxis("Horizontal");
+        _verticalPosition = Input.GetAxis("Vertical");
+
+        _rotationX = Input.GetAxis("Mouse Y");
+        _rotationY = Input.GetAxis("Mouse X");
+
+
+        SetMoveAndRotatePosition();
     }
-
-
-    async public void UpdateInput()
+    /*async public void UpdateInput()
     {
         while (true)
         {
@@ -35,13 +47,12 @@ public class InputKeyAndMouse : IInputProvider
 
             await Task.Delay(20);
         }
-    }
+    }*/
 
     private void SetMoveAndRotatePosition()
     {
-        //TODO: create parameter and move it to config
-        if ((_horizontalPosition >= 0.2f) || (_horizontalPosition <= 0.2) || (_verticalPosition >= 0.2f) ||
-            (_verticalPosition <= 0.2f))
+        if ((_horizontalPosition >= _blindSpot) || (_horizontalPosition <= _blindSpot) || 
+            (_verticalPosition >= _blindSpot) || (_verticalPosition <= _blindSpot))
         {
             _positionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
             _positionToRotate = new Vector3(_rotationX, _rotationY, 0);
