@@ -9,7 +9,9 @@ public class PlayerModelFactory : PlaceholderFactory<CharacterModel>
         _container = container;
     }
 
+    //TODO: Do you need that?)
     // ReSharper disable Unity.PerformanceAnalysis
+    
     public override CharacterModel Create()
     {
         return _container.Instantiate<CharacterModel>();

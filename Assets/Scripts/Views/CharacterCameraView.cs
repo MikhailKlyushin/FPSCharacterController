@@ -5,15 +5,16 @@ public class CharacterCameraView : MonoBehaviour
 {
     #region Params
 
+    //TODO: move to config
     [SerializeField] private float sensivityHorisontal = 20f;
     [SerializeField] private float sensivityVertical = 20f;
-
     [SerializeField] private float minimumVerticalAngle = -45f;
     [SerializeField] private float maximumVerticalAngle = 45f;
 
     private float _rotationPositionX;
     private float _rotationPositionY;
 
+    //TODO: It's not constant, but config
     private const float SmoothSpeed = 0.15f;
 
     #endregion

@@ -20,6 +20,8 @@ public class CharacterConfig : ScriptableObject
 
     public float MoveSpeed => _moveSpeed;
     public float SensivityHorizontal => _sensivityHorisontal;
+    
+    //TODO: All of properties below are not using
     public float SensivityVertical => _sensivityVertical;
     public float MinimumVerticalAngle => _minimumVerticalAngle;
     public float MaximumVerticalAngle => _maximumVerticalAngle;

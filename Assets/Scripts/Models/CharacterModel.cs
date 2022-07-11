@@ -16,7 +16,7 @@ public class CharacterModel
     private CharacterConfig _config;
     private Vector3 _inputVector;
     private Vector3 _rotationVectorY;
-
+    
     public CharacterModel(IInputProvider inputController, CharacterConfig config)
     {
         SetConfigParams(config);
@@ -49,6 +49,7 @@ public class CharacterModel
         _velocity *= _config.MoveSpeed;
     }
 
+    //TODO: He is so alone(((
     private float _rotationPositionY;
 
     private void RotateToPosition(Vector3 positionToRotate)

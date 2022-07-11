@@ -16,6 +16,8 @@ public class CharacterView : MonoBehaviour
 
     private float _directionHorizontal;
     private float _directionVertical;
+    
+    //TODO: _horizontal (not static), trust yourself
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
     

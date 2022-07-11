@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
+//TODO: use ITickable
 public class InputKeyAndMouse : IInputProvider
 {
     private float _horizontalPosition;
@@ -38,6 +39,7 @@ public class InputKeyAndMouse : IInputProvider
 
     private void SetMoveAndRotatePosition()
     {
+        //TODO: create parameter and move it to config
         if ((_horizontalPosition >= 0.2f) || (_horizontalPosition <= 0.2) || (_verticalPosition >= 0.2f) ||
             (_verticalPosition <= 0.2f))
         {
