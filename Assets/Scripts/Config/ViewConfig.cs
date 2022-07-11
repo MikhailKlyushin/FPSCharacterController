@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ViewConfig", menuName = "Configuration Script/View Config", order = 2)]
+[CreateAssetMenu(fileName = "ViewConfig", menuName = "Configuration Script/View Config", order = 4)]
 
 public class ViewConfig : ScriptableObject
 {

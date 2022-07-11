@@ -12,12 +12,12 @@ public class InitializationPlayer : MonoBehaviour
     {
         _playerService = service;
     }
-    
+
     private void Start()
     {
         CameraTrackingMode();
     }
-    
+
     private void CameraTrackingMode()
     {
         var playerID = _playerService.CreatePlayer();

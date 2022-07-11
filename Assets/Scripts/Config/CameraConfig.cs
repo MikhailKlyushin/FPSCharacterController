@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CameraConfig", menuName = "Configuration Script/Camera Config", order = 3)]
+[CreateAssetMenu(fileName = "CameraConfig", menuName = "Configuration Script/Camera Config", order = 1)]
 public class CameraConfig : ScriptableObject
 {
     [SerializeField] private string _pathToPrefab = "Prefabs/ThirdPersonCamera";

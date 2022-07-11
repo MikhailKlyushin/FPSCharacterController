@@ -12,16 +12,15 @@ public class InputKeyAndMouse : IInputProvider, ITickable
     private float _rotationY;
     private Vector3 _positionToRotate;
 
-    //TODO: move to config
-    private float _blindSpot = 0.2f;
+    private InputConfig _config;
+
+    private InputKeyAndMouse(InputConfig config)
+    {
+        _config = config;
+    }
 
     public event IInputProvider.InputHandler InputNotify;
-    
-    /*public InputKeyAndMouse()
-    {
-        //this.UpdateInput();
-    }*/
-    
+
     public void Tick()
     {
         _horizontalPosition = Input.GetAxis("Horizontal");
@@ -29,42 +28,13 @@ public class InputKeyAndMouse : IInputProvider, ITickable
 
         _rotationX = Input.GetAxis("Mouse Y");
         _rotationY = Input.GetAxis("Mouse X");
-
-
+        
         SetMoveAndRotatePosition();
     }
-    /*async public void UpdateInput()
-    {
-        while (true)
-        {
-            _horizontalPosition = Input.GetAxis("Horizontal");
-            _verticalPosition = Input.GetAxis("Vertical");
-
-            _rotationX = Input.GetAxis("Mouse Y");
-            _rotationY = Input.GetAxis("Mouse X");
-
-
-            SetMoveAndRotatePosition();
-
-            await Task.Delay(20);
-        }
-    }*/
-
     private void SetMoveAndRotatePosition()
     {
-        //TODO: refactor this
-        if ((_horizontalPosition >= _blindSpot) || (_horizontalPosition <= -_blindSpot) || 
-            (_verticalPosition >= _blindSpot) || (_verticalPosition <= _blindSpot))
-        {
-            _positionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
-            _positionToRotate = new Vector3(_rotationX, _rotationY, 0);
-            InputNotify?.Invoke(_positionToMove, _positionToRotate);
-        }
-        else
-        {
-            _positionToMove = new Vector3(0, 0, 0);
-            _positionToRotate = new Vector3(_rotationX, _rotationY, 0);
-            InputNotify?.Invoke(_positionToMove, _positionToRotate);
-        }
+        _positionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
+        _positionToRotate = new Vector3(_rotationX, _rotationY, 0);
+        InputNotify?.Invoke(_positionToMove, _positionToRotate);
     }
 }

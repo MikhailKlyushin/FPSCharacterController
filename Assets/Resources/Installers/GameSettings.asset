@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803c162019253ac47834b9418e1382dd, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  _inputConfig: {fileID: 11400000, guid: 3b74273e01f9cba4b824aca9abafa528, type: 2}
   _characterConfig: {fileID: 11400000, guid: d46749f92d75bbe4496b1262ded95c56, type: 2}
   _viewConfig: {fileID: 11400000, guid: 7a5454a72e4647c4186a3a52c12964d5, type: 2}
   _cameraConfig: {fileID: 11400000, guid: 436d64287af9ecc41863b365d19f54f0, type: 2}

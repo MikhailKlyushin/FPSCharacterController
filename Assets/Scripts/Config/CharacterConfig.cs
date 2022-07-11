@@ -1,15 +1,13 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "CharacterConfig", menuName = "Configuration Script/Character Config", order = 1)]
+[CreateAssetMenu(fileName = "CharacterConfig", menuName = "Configuration Script/Character Config", order = 2)]
 
 public class CharacterConfig : ScriptableObject
 {
     [SerializeField] private float _moveSpeed = 3;
-    
-    //TODO: horizontal
-    [SerializeField] private float _sensivityHorisontal = 20f;
+    [SerializeField] private float _sensivityHorizontal = 20f;
     
     public float MoveSpeed => _moveSpeed;
-    public float SensivityHorizontal => _sensivityHorisontal;
+    public float SensivityHorizontal => _sensivityHorizontal;
 }

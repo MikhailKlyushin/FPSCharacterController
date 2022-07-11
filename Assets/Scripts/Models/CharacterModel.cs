@@ -19,8 +19,7 @@ public class CharacterModel
     private Vector3 _velocity;
     private float _rotationPositionY;
     
-    //TODO: remove id
-    public CharacterModel([Inject(Id = "id")] IInputProvider inputController, CharacterConfig config)
+    public CharacterModel(IInputProvider inputController, CharacterConfig config)
     {
         SetConfigParams(config);
         ConnectInputController(inputController);
