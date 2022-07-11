@@ -19,10 +19,10 @@ public class CharacterModel
     private Vector3 _velocity;
     private float _rotationPositionY;
     
-    public CharacterModel(IInputProvider inputController, CharacterConfig config)
+    public CharacterModel(SignalBus signalBus, CharacterConfig config)
     {
         SetConfigParams(config);
-        ConnectInputController(inputController);
+        ConnectInputController(signalBus);
     }
     
     private void SetConfigParams(CharacterConfig config)
@@ -30,9 +30,9 @@ public class CharacterModel
         _config = config;
     }
     
-    private void ConnectInputController(IInputProvider input)
+    private void ConnectInputController(SignalBus signalBus)
     {
-        input.InputNotify += ChangeCharacterPosition;
+        signalBus.Subscribe<ISignalInput>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
     }
 
     private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)

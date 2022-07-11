@@ -13,9 +13,9 @@ public class CharacterCameraView : MonoBehaviour
     private CameraConfig _config;
 
     [Inject]
-    private void Construct([Inject(Id = "id")] IInputProvider input, CameraConfig config)
+    private void Construct(SignalBus signalBus, CameraConfig config)
     {
-        input.InputNotify += ChangeCharacterPosition;
+        signalBus.Subscribe<ISignalInput>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
         _config = config;
     }
 
