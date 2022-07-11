@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-
+//TODO: add interface IIdentified
 public class CharacterView : MonoBehaviour
 {
     public string CharacterID => _characterID;

@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using UnityEngine;
 
+//TODO: Do storage the inheritor of IStorage interface
 public class CharacterStorage
 {
     private List<CharacterModel> _characters = new List<CharacterModel>();

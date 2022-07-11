@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
+//TODO: add interface IIdentified
 public class CharacterModel
 {
     public string CharacterID => _characterID;
@@ -18,6 +19,7 @@ public class CharacterModel
     private Vector3 _velocity;
     private float _rotationPositionY;
     
+    //TODO: remove id
     public CharacterModel([Inject(Id = "id")] IInputProvider inputController, CharacterConfig config)
     {
         SetConfigParams(config);

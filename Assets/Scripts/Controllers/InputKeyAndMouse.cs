@@ -12,10 +12,11 @@ public class InputKeyAndMouse : IInputProvider, ITickable
     private float _rotationY;
     private Vector3 _positionToRotate;
 
+    //TODO: move to config
     private float _blindSpot = 0.2f;
 
     public event IInputProvider.InputHandler InputNotify;
-
+    
     /*public InputKeyAndMouse()
     {
         //this.UpdateInput();
@@ -51,7 +52,8 @@ public class InputKeyAndMouse : IInputProvider, ITickable
 
     private void SetMoveAndRotatePosition()
     {
-        if ((_horizontalPosition >= _blindSpot) || (_horizontalPosition <= _blindSpot) || 
+        //TODO: refactor this
+        if ((_horizontalPosition >= _blindSpot) || (_horizontalPosition <= -_blindSpot) || 
             (_verticalPosition >= _blindSpot) || (_verticalPosition <= _blindSpot))
         {
             _positionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
