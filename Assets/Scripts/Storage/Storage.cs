@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Storage<T> : IStorage<T> where T : IIdentified
 {
-    private List<T> _list = new List<T>();
+    private readonly List<T> _list = new List<T>();
     public int Count => _list.Count;
     
     public T Get(string id)

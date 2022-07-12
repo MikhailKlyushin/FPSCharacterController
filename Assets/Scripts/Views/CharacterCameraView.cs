@@ -14,8 +14,7 @@ public class CharacterCameraView : MonoBehaviour
     [Inject]
     private void Construct(SignalBus signalBus, CameraConfig config)
     {
-        //TODO: Change ISignalInput to SignalInputProvider for delete Exception
-        signalBus.Subscribe<ISignalInput>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
+        signalBus.Subscribe<SignalInputProvider>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
         _config = config;
     }
 

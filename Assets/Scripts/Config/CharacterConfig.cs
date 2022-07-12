@@ -5,8 +5,8 @@ using UnityEngine;
 public class CharacterConfig : ScriptableObject
 {
     [SerializeField] private float _moveSpeed = 3;
-    [SerializeField] private float _sensivityHorizontal = 20f;
+    [SerializeField] private float _sensitivityHorizontal = 20f;
     
     public float MoveSpeed => _moveSpeed;
-    public float SensivityHorizontal => _sensivityHorizontal;
+    public float SensitivityHorizontal => _sensitivityHorizontal;
 }

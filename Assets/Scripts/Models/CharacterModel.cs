@@ -12,7 +12,7 @@ public class CharacterModel : IIdentified
     
 
     private readonly string _characterID = Guid.NewGuid().ToString();
-    private CharacterConfig _config;
+    private readonly CharacterConfig _config;
     private Vector3 _inputVector;
     private Vector3 _rotationVectorY;
     private Vector3 _velocity;
@@ -20,18 +20,13 @@ public class CharacterModel : IIdentified
     
     public CharacterModel(SignalBus signalBus, CharacterConfig config)
     {
-        SetConfigParams(config);
-        ConnectInputController(signalBus);
-    }
-    
-    private void SetConfigParams(CharacterConfig config)
-    {
         _config = config;
+        ConnectInputNotification(signalBus);
     }
-    
-    private void ConnectInputController(SignalBus signalBus)
+
+    private void ConnectInputNotification(SignalBus signalBus)
     {
-        signalBus.Subscribe<ISignalInput>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
+        signalBus.Subscribe<SignalInputProvider>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
     }
 
     private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
@@ -50,9 +45,9 @@ public class CharacterModel : IIdentified
 
     private void RotateToPosition(Vector3 positionToRotate)
     {
-        var delta = positionToRotate.y * _config.SensivityHorizontal;
+        var delta = positionToRotate.y * _config.SensitivityHorizontal;
         _rotationPositionY += delta;
 
-        _rotationVectorY = new Vector3(0, _rotationPositionY, 0);
+        _rotationVectorY.y = _rotationPositionY;
     }
 }

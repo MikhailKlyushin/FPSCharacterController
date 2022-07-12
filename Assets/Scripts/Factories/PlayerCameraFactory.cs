@@ -4,7 +4,7 @@ using Zenject;
 public class PlayerCameraFactory : PlaceholderFactory<CharacterCameraView>
 {
     private readonly DiContainer _container;
-    private CameraConfig _config;
+    private readonly CameraConfig _config;
 
     public PlayerCameraFactory(DiContainer container, CameraConfig config)
     {

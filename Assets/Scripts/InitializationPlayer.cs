@@ -3,8 +3,6 @@ using Zenject;
 
 public class InitializationPlayer : MonoBehaviour
 {
-    [SerializeField] private CharacterCameraView characterCamera;
-    
     private CharacterService _playerService;
     
     [Inject]
