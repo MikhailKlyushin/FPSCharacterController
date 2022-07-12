@@ -4,7 +4,7 @@ using Zenject;
 public class PlayerViewFactory : PlaceholderFactory<CharacterView>
 {
     private readonly DiContainer _container;
-    private ViewConfig _config;
+    private readonly ViewConfig _config;
 
 
     public PlayerViewFactory(DiContainer container, ViewConfig config)

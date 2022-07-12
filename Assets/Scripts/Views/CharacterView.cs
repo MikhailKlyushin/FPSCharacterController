@@ -1,13 +1,8 @@
-using System;
 using UnityEngine;
-using Zenject;
 
-//TODO: add interface IIdentified
-public class CharacterView : MonoBehaviour
+public class CharacterView : MonoBehaviour, IIdentified
 {
-    public string CharacterID => _characterID;
-
-
+    public string ID => _characterID;
     private string _characterID;
 
     private CharacterModel _model;
@@ -23,7 +18,7 @@ public class CharacterView : MonoBehaviour
     public void SetModel(CharacterModel model)
     {
         _model = model;
-        _characterID = model.CharacterID;
+        _characterID = model.ID;
     }
 
     private void Start()

@@ -8,8 +8,7 @@ public class PlayerModelFactory : PlaceholderFactory<CharacterModel>
     {
         _container = container;
     }
-    
-    
+
     public override CharacterModel Create()
     {
         return _container.Instantiate<CharacterModel>();

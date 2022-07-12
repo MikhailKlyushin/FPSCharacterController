@@ -14,8 +14,8 @@ public class SceneInstaller : MonoInstaller
         Container.BindFactory<CharacterCameraView, PlayerCameraFactory>().AsSingle();
 
         Container.Bind<CharacterService>().AsSingle();
-
-        Container.Bind<CharacterStorage>().AsSingle();
-        Container.Bind<ViewStorage>().AsSingle();
+        
+        Container.BindInterfacesAndSelfTo<Storage<CharacterModel>>().AsSingle();
+        Container.BindInterfacesAndSelfTo<Storage<CharacterView>>().AsSingle();
     }
 }

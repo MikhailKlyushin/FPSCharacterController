@@ -2,10 +2,9 @@ using System;
 using UnityEngine;
 using Zenject;
 
-//TODO: add interface IIdentified
-public class CharacterModel
+public class CharacterModel : IIdentified
 {
-    public string CharacterID => _characterID;
+    public string ID => _characterID;
     public float MoveSpeed => _config.MoveSpeed;
     public Vector3 InputVector => _inputVector;
     public Vector3 LocalRotateAngleY => _rotationVectorY;

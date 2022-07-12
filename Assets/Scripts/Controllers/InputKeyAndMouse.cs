@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -10,11 +9,8 @@ public class InputKeyAndMouse : IInputProvider, ITickable
     private float _rotationX;
     private float _rotationY;
     
+    private readonly SignalBus _signalBus;
     private SignalInputProvider _input;
-
-    private InputConfig _config;
-    
-    private SignalBus _signalBus;
 
     private InputKeyAndMouse(SignalBus signalBus)
     {

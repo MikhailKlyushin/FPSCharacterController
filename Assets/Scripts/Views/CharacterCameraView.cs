@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 public class CharacterCameraView : MonoBehaviour
@@ -15,6 +14,7 @@ public class CharacterCameraView : MonoBehaviour
     [Inject]
     private void Construct(SignalBus signalBus, CameraConfig config)
     {
+        //TODO: Change ISignalInput to SignalInputProvider for delete Exception
         signalBus.Subscribe<ISignalInput>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
         _config = config;
     }

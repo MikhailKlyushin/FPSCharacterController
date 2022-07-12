@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "CharacterConfig", menuName = "Configuration Script/Character Config", order = 2)]
 
 public class CharacterConfig : ScriptableObject

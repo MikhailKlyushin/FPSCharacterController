@@ -1,20 +1,19 @@
-using System;
 using UnityEngine;
 
 
 public class CharacterService
 {
-    private readonly CharacterStorage _characterStorage;
-    private readonly ViewStorage _viewStorage;
+    private readonly Storage<CharacterModel> _characterStorage;
+    private readonly Storage<CharacterView> _viewStorage;
 
     private readonly PlayerModelFactory _playerModelFactory;
     private readonly PlayerViewFactory _playerViewFactory;
     private readonly PlayerCameraFactory _playerCameraFactory;
 
-    CharacterService
+    private CharacterService
     (
-        CharacterStorage characterStorage, 
-        ViewStorage viewStorage,
+        Storage<CharacterModel> characterStorage, 
+        Storage<CharacterView> viewStorage,
         PlayerModelFactory playerModelFactory, 
         PlayerViewFactory playerViewFactory,
         PlayerCameraFactory playerCameraFactory)
@@ -29,28 +28,34 @@ public class CharacterService
     
     public CharacterModel GetModel(string characterID)
     {
-        var model = _characterStorage.GetChatacterModel(characterID);
+        var model = _characterStorage.Get(characterID);
 
         if (model != null)
         {
             return model;
         }
         
-        Debug.Log("CharacterStorage.cs: Character with this ID not found!");
+        Debug.Log("Character with this ID not found!");
         return null;
     }
 
     public CharacterView GetView(string characterID)
     {
-        var view = _viewStorage.GetChatacterView(characterID);
+        var view = _viewStorage.Get(characterID);
 
         if (view != null)
         {
             return view;
         }
         
-        Debug.Log("Exception! - CharacterStorage.cs: Character with this ID not found!");
+        Debug.Log("View with this ID not found!");
         return null;
+    }
+
+    public CharacterCameraView CreatePlayerCamera(Transform target)
+    {
+        var playerCamera = _playerCameraFactory.Create(target);
+        return playerCamera;
     }
 
     public string CreatePlayer()
@@ -58,32 +63,23 @@ public class CharacterService
         var model = CreateModel();
         var view = CreateView(model);
 
-        return view.CharacterID;
+        return view.ID;
     }
 
-
-    public CharacterModel CreateModel()
+    private CharacterModel CreateModel()
     {
-        const string pathToPlayerConfig = "Config/PlayerConfig";
-        var playerConfig = Resources.Load<CharacterConfig>(pathToPlayerConfig);
         var playerModel = _playerModelFactory.Create();
 
-        _characterStorage.AddCharacterModel(playerModel);
+        _characterStorage.Add(playerModel);
 
         return playerModel;
     }
 
-    public CharacterView CreateView(CharacterModel model)
+    private CharacterView CreateView(CharacterModel model)
     {
         var playerView = _playerViewFactory.Create(model);
-        _viewStorage.AddCharacterView(playerView);
+        _viewStorage.Add(playerView);
 
         return playerView;
-    }
-
-    public CharacterCameraView CreatePlayerCamera(Transform target)
-    {
-        var playerCamera = _playerCameraFactory.Create(target);
-        return playerCamera;
     }
 }
