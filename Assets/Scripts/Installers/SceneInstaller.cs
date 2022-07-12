@@ -7,7 +7,7 @@ public class SceneInstaller : MonoInstaller
         SignalBusInstaller.Install(Container);
         Container.DeclareSignalWithInterfaces<SignalInputProvider>();
 
-        Container.Bind(typeof(IInputProvider), typeof(ITickable)).To<InputKeyAndMouse>().AsSingle();
+        Container.Bind(typeof(IInputProvider), typeof(IInitializable)).To<InputKeyAndMouse>().AsSingle();
 
         Container.BindFactory<CharacterModel, PlayerModelFactory>().AsSingle();
         Container.BindFactory<CharacterView, PlayerViewFactory>().AsSingle();

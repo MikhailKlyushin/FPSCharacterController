@@ -1,7 +1,8 @@
+using UniRx;
 using UnityEngine;
 using Zenject;
 
-public class InputKeyAndMouse : IInputProvider, ITickable
+public class InputKeyAndMouse : IInputProvider, IInitializable
 {
     private float _horizontalPosition;
     private float _verticalPosition;
@@ -17,7 +18,22 @@ public class InputKeyAndMouse : IInputProvider, ITickable
         _signalBus = signalBus;
     }
 
-    public void Tick()
+    public void Initialize()
+    {
+        Start();
+    }
+
+    private void Start()
+    {
+        Observable.EveryUpdate() // поток update
+            .Subscribe(x =>
+            {
+                GetInput();
+            });
+    }
+
+
+    private void GetInput()
     {
         _horizontalPosition = Input.GetAxis("Horizontal");
         _verticalPosition = Input.GetAxis("Vertical");
@@ -27,6 +43,7 @@ public class InputKeyAndMouse : IInputProvider, ITickable
         
         SetMoveAndRotatePosition();
     }
+
     private void SetMoveAndRotatePosition()
     {
         _input.PositionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
@@ -34,5 +51,6 @@ public class InputKeyAndMouse : IInputProvider, ITickable
         InputEventNotification();
         
     }
+
     private void InputEventNotification() => _signalBus.AbstractFire(_input);
 }
