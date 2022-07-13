@@ -5,8 +5,8 @@ public class CameraConfig : ScriptableObject
 {
     [SerializeField] private string _pathToPrefab = "Prefabs/ThirdPersonCamera";
     
-    [SerializeField] private float _sensivityHorisontal = 20f;
-    [SerializeField] private float _sensivityVertical = 20f;
+    [SerializeField] private float _sensitivityHorisontal = 20f;
+    [SerializeField] private float _sensitivityVertical = 20f;
 
     [SerializeField] private float _minimumVerticalAngle = -45f;
     [SerializeField] private float _maximumVerticalAngle = 45f;
@@ -15,8 +15,8 @@ public class CameraConfig : ScriptableObject
 
 
     public string PathToPrefab => _pathToPrefab;
-    public float SensivityHorizontal => _sensivityHorisontal;
-    public float SensivityVertical => _sensivityVertical;
+    public float SensitivityHorizontal => _sensitivityHorisontal;
+    public float SensitivityVertical => _sensitivityVertical;
     public float MinimumVerticalAngle => _minimumVerticalAngle;
     public float MaximumVerticalAngle => _maximumVerticalAngle;
     public float SmoothSpeed => _smoothSpeed;

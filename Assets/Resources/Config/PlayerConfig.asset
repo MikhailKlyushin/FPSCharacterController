@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   _moveSpeed: 3
-  _sensitivityHorizontal: 5
+  _sensitivityHorizontal: 500
