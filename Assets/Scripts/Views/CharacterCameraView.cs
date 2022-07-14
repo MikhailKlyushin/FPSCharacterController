@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -11,11 +12,13 @@ public class CharacterCameraView : MonoBehaviour
 
     private Transform _targetForCamera;
     private CameraConfig _config;
+    
+    private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
     [Inject]
     private void Construct(SignalBus signalBus, CameraConfig config)
     {
-        signalBus.Subscribe<SignalInputProvider>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
+        signalBus.Subscribe<SignalInputProvider>(input => ChangeCameraPosition(input.PositionToMove, input.PositionToRotate));
         _config = config;
     }
 
@@ -24,20 +27,23 @@ public class CharacterCameraView : MonoBehaviour
         _targetForCamera = target;
     }
 
-    private void FixedUpdate()
+    private void Start()
     {
-        if (_targetForCamera != null)
-        {
-            Vector3 position = _targetForCamera.transform.position;
-            Vector3 smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
-            transform.position = smoothVector;
+        Observable.EveryFixedUpdate() // поток update
+            .Subscribe(_ =>
+            {
+                if (_targetForCamera != null)
+                {
+                    Vector3 position = _targetForCamera.transform.position;
+                    Vector3 smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
+                    transform.position = smoothVector;
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, _rotate, 0.5f); //TODO: add const in config
-        }
+                    transform.rotation = _rotate;
+                }
+            }).AddTo(_disposable);
     }
 
-
-    private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
+    private void ChangeCameraPosition(Vector3 positionToMove, Vector3 positionToRotate)
     {
         _rotate = RotateToPosition(positionToRotate);
     }

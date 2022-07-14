@@ -28,7 +28,7 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
     private void Start()
     {
         Observable.EveryFixedUpdate() // поток update
-            .Subscribe(x =>
+            .Subscribe(_ =>
             {
                 GetInput();
                 SetMoveAndRotatePosition();

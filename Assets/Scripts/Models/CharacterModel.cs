@@ -7,13 +7,14 @@ public class CharacterModel : IIdentified
 {
     public string ID => _characterID;
     public float MoveSpeed => _config.MoveSpeed;
-    public Vector3 InputVector => _inputVector;
-    public ReactiveProperty<Quaternion> RotateY { get; } = new ReactiveProperty<Quaternion>();
+    //public Vector3 InputVector => _inputVector;
+    public ReactiveProperty<Vector3> InputVector { get; } = new ReactiveProperty<Vector3>();
     public ReactiveProperty<Vector3> Velocity { get; } = new ReactiveProperty<Vector3>();
+    public ReactiveProperty<Quaternion> RotateY { get; } = new ReactiveProperty<Quaternion>();
 
     private readonly string _characterID = Guid.NewGuid().ToString();
     private readonly CharacterConfig _config;
-    private Vector3 _inputVector;
+
     private Vector3 _rotationVectorY;
     private Vector3 _velocity;
     private float _rotationPositionY;
@@ -33,8 +34,8 @@ public class CharacterModel : IIdentified
 
     private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
     {
-        _inputVector = positionToMove;
-
+        InputVector.SetValueAndForceNotify(positionToMove);
+        
         MoveToPosition(positionToMove);
         RotateToPosition(positionToRotate);
     }
