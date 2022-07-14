@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -28,7 +29,7 @@ public class CharacterCameraView : MonoBehaviour
         var smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
         transform.position = smoothVector;
         
-        transform.rotation = RotateToPosition(positionToRotate);
+        transform.rotation =Quaternion.Lerp(transform.rotation, RotateToPosition(positionToRotate), 0.8f);
     }
 
     private Quaternion RotateToPosition(Vector3 positionToRotate)

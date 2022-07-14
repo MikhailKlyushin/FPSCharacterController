@@ -1,11 +1,15 @@
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class InputKeyAndMouse : IInputProvider, IInitializable
 {
-    private float _horizontalPosition;
-    private float _verticalPosition;
+    private InputControl _inputControl;
+
+    private Vector2 _movePosition;
+    private Vector2 _rotatePosition;
 
     private float _rotationX;
     private float _rotationY;
@@ -22,33 +26,42 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
 
     public void Initialize()
     {
+        _inputControl = new InputControl();
+        _inputControl.Enable();
         Start();
     }
 
     private void Start()
     {
+        SubscribeToKeyPress();
+        
         Observable.EveryFixedUpdate() // поток update
             .Subscribe(_ =>
             {
-                GetInput();
+                GetInputVectors();
                 SetMoveAndRotatePosition();
             }).AddTo(_disposable);
     }
-    
-    private void GetInput()
-    {
-        _horizontalPosition = Input.GetAxis("Horizontal");
-        _verticalPosition = Input.GetAxis("Vertical");
 
-        _rotationX = Input.GetAxis("Mouse Y");
-        _rotationY = Input.GetAxis("Mouse X");
+    private void SubscribeToKeyPress()
+    {
+        //set keys
+    }
+    
+    private void GetInputVectors()
+    {
+        _movePosition = _inputControl.Player.Move.ReadValue<Vector2>();
+        _rotatePosition = _inputControl.Player.Look.ReadValue<Vector2>();
     }
 
     private void SetMoveAndRotatePosition()
     {
-        _input.PositionToMove = new Vector3(_horizontalPosition, 0, _verticalPosition);
-        _input.PositionToRotate = new Vector3(_rotationX, _rotationY, 0);
+        //TODO: revrite input
+        //_input.PositionToMove = new Vector3(_movePosition.x, 0, _movePosition.y);
+        _input.PositionToMove = Vector3.Lerp(_input.PositionToMove, new Vector3(_movePosition.x, 0, _movePosition.y), 0.2f);
         
+        _input.PositionToRotate = new Vector3(_rotatePosition.y, _rotatePosition.x, 0);
+
         InputEventNotification();
     }
 

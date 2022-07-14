@@ -56,6 +56,7 @@ public class CharacterModel : IIdentified
         _rotationVectorY.y = _rotationPositionY;
         _rotateY = Quaternion.Euler(_rotationVectorY);
         
-        RotateY.Value = _rotateY;
+        //TODO: revrite input
+        RotateY.Value = Quaternion.Lerp(RotateY.Value, _rotateY, 0.8f);
     }
 }
