@@ -1,4 +1,3 @@
-using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -8,12 +7,8 @@ public class CharacterCameraView : MonoBehaviour
     private float _horizontalRotateByY;
     
     private Vector3 _rotationVector;
-    private Quaternion _rotate;
-
     private Transform _targetForCamera;
     private CameraConfig _config;
-    
-    private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
     [Inject]
     private void Construct(SignalBus signalBus, CameraConfig config)
@@ -27,25 +22,13 @@ public class CharacterCameraView : MonoBehaviour
         _targetForCamera = target;
     }
 
-    private void Start()
-    {
-        Observable.EveryFixedUpdate() // поток update
-            .Subscribe(_ =>
-            {
-                if (_targetForCamera != null)
-                {
-                    Vector3 position = _targetForCamera.transform.position;
-                    Vector3 smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
-                    transform.position = smoothVector;
-
-                    transform.rotation = _rotate;
-                }
-            }).AddTo(_disposable);
-    }
-
     private void ChangeCameraPosition(Vector3 positionToMove, Vector3 positionToRotate)
     {
-        _rotate = RotateToPosition(positionToRotate);
+        var position = _targetForCamera.transform.position;
+        var smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
+        transform.position = smoothVector;
+        
+        transform.rotation = RotateToPosition(positionToRotate);
     }
 
     private Quaternion RotateToPosition(Vector3 positionToRotate)

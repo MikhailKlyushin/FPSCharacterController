@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CameraConfig
   m_EditorClassIdentifier: 
   _pathToPrefab: Prefabs/ThirdPersonCamera
-  _sensitivityHorisontal: 400
-  _sensitivityVertical: 400
+  _sensitivityHorisontal: 500
+  _sensitivityVertical: 500
   _minimumVerticalAngle: -45
   _maximumVerticalAngle: 45
   _smoothSpeed: 0.15
