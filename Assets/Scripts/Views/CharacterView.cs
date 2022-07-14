@@ -16,8 +16,9 @@ public class CharacterView : MonoBehaviour, IIdentified
     private readonly int _horizontal = Animator.StringToHash("Horizontal");
     private readonly int _vertical = Animator.StringToHash("Vertical");
 
-    private CompositeDisposable _disposable = new CompositeDisposable();
-    
+    private Quaternion _localRotateAngle;
+    private readonly CompositeDisposable _disposable = new CompositeDisposable();
+
     public void SetModel(CharacterModel model)
     {
         _model = model;
@@ -28,19 +29,22 @@ public class CharacterView : MonoBehaviour, IIdentified
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+
         
         _model.Velocity.Subscribe(velocity =>
         {
             _rigidbody.velocity = transform.TransformDirection(velocity);
-            Debug.Log("Rigidbody.Vel = " + _rigidbody.velocity);
             Debug.DrawRay(transform.position, velocity, Color.green);
         }).AddTo(_disposable);
-        /*_model.RotateY.Subscribe(angle =>
+
+        _model.RotateY.Subscribe(angle =>
         {
-            transform.rotation = angle; //Quaternion.Lerp( transform.rotation,angle, 0.1f);
-        }).AddTo(_disposable);*/
+            _localRotateAngle = angle;
+
+        }).AddTo(_disposable);
     }
 
+    
     private void Update()
     {
         RunStrafeAnimations();
@@ -52,8 +56,8 @@ public class CharacterView : MonoBehaviour, IIdentified
     }
 
     private void UpdateViewModel()
-    {
-        transform.rotation = _model.RotateY;
+    { 
+        transform.rotation = _localRotateAngle;
 
         _directionHorizontal = _model.InputVector.x;
         _directionVertical = _model.InputVector.z;

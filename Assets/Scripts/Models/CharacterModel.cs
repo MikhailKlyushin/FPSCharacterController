@@ -8,8 +8,7 @@ public class CharacterModel : IIdentified
     public string ID => _characterID;
     public float MoveSpeed => _config.MoveSpeed;
     public Vector3 InputVector => _inputVector;
-    public Quaternion RotateY => _rotateY;
-    //public ReactiveProperty<Quaternion> RotateY { get; } = new ReactiveProperty<Quaternion>();
+    public ReactiveProperty<Quaternion> RotateY { get; } = new ReactiveProperty<Quaternion>();
     public ReactiveProperty<Vector3> Velocity { get; } = new ReactiveProperty<Vector3>();
 
     private readonly string _characterID = Guid.NewGuid().ToString();
@@ -20,6 +19,7 @@ public class CharacterModel : IIdentified
     private float _rotationPositionY;
     private Quaternion _rotateY;
     
+
     public CharacterModel(SignalBus signalBus, CharacterConfig config)
     {
         _config = config;
@@ -43,6 +43,7 @@ public class CharacterModel : IIdentified
     {
         _velocity = positionToMove;
         _velocity *= _config.MoveSpeed;
+        
         Velocity.SetValueAndForceNotify(_velocity);
     }
 
@@ -53,13 +54,7 @@ public class CharacterModel : IIdentified
 
         _rotationVectorY.y = _rotationPositionY;
         _rotateY = Quaternion.Euler(_rotationVectorY);
-        //RotateY.SetValueAndForceNotify(_rotateY);
+        
+        RotateY.Value = _rotateY;
     }
-    /*private void RotateToPosition(Vector3 positionToRotate)
-    {
-        var delta = positionToRotate.y * _config.SensitivityHorizontal;
-        _rotationPositionY += delta;
-
-        _rotationVectorY.y = _rotationPositionY;
-    }*/
 }
