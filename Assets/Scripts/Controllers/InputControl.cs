@@ -94,7 +94,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c14ba42b-f6c9-4289-9313-04d89c903153"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",

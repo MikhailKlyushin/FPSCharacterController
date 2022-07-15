@@ -6,7 +6,7 @@ using Zenject;
 
 public class InputKeyAndMouse : IInputProvider, IInitializable
 {
-    private InputControl _inputControl;
+    private StarterAssets _inputControl;
 
     private Vector2 _movePosition;
     private Vector2 _rotatePosition;
@@ -26,7 +26,7 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
 
     public void Initialize()
     {
-        _inputControl = new InputControl();
+        _inputControl = new StarterAssets();
         _inputControl.Enable();
         Start();
     }
@@ -56,7 +56,7 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
 
     private void SetMoveAndRotatePosition()
     {
-        //TODO: revrite input
+        //TODO: rewrite input
         //_input.PositionToMove = new Vector3(_movePosition.x, 0, _movePosition.y);
         _input.PositionToMove = Vector3.Lerp(_input.PositionToMove, new Vector3(_movePosition.x, 0, _movePosition.y), 0.2f);
         
