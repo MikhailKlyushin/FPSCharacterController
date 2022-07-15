@@ -44,14 +44,6 @@ public class CharacterModel : IIdentified
         }).AddTo(_disposable);
     }
 
-    /*private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
-    {
-        InputVector.SetValueAndForceNotify(positionToMove);
-        
-        MoveToPosition(positionToMove);
-        RotateToPosition(positionToRotate);
-    }*/
-
     private void MoveToPosition(Vector3 positionToMove)
     {
         _velocity = positionToMove;
@@ -68,7 +60,6 @@ public class CharacterModel : IIdentified
         _rotationVectorY.y = _rotationPositionY;
         _rotateY = Quaternion.Euler(_rotationVectorY);
         
-        //TODO: rewrite input
-        RotateY.Value = Quaternion.Lerp(RotateY.Value, _rotateY, 0.8f);
+        RotateY.Value = Quaternion.Lerp(RotateY.Value, _rotateY, _config.SmoothRotate);
     }
 }

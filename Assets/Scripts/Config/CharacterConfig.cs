@@ -6,7 +6,9 @@ public class CharacterConfig : ScriptableObject
 {
     [SerializeField] private float _moveSpeed = 3;
     [SerializeField] private float _sensitivityHorizontal = 20f;
+    [SerializeField] private float _smoothRotate= 0.8f;
     
     public float MoveSpeed => _moveSpeed;
     public float SensitivityHorizontal => _sensitivityHorizontal;
+    public float SmoothRotate => _smoothRotate;
 }
