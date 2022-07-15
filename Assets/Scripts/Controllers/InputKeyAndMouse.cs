@@ -14,6 +14,7 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
     private float _rotationX;
     private float _rotationY;
     
+    //TODO: use the reactive properties, they're faster than the signals
     private readonly SignalBus _signalBus;
     private SignalInputProvider _input;
     
@@ -33,8 +34,11 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
 
     private void Start()
     {
+        //TODO: It's empty
         SubscribeToKeyPress();
         
+        //TODO: Russian comments again
+        //TODO: It's useless because you can to subscribe on the perform input event (see todo in GetInputVectors()
         Observable.EveryFixedUpdate() // поток update
             .Subscribe(_ =>
             {
@@ -42,7 +46,7 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
                 SetMoveAndRotatePosition();
             }).AddTo(_disposable);
     }
-
+    
     private void SubscribeToKeyPress()
     {
         //set keys
@@ -50,6 +54,10 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
     
     private void GetInputVectors()
     {
+        //TODO: Try like this:
+        // _inputControl.Player.Move.performed +=
+        //         context => reactiveProperty.SetValueAndForceNotify(context.ReadValue<Vector2>()); 
+        
         _movePosition = _inputControl.Player.Move.ReadValue<Vector2>();
         _rotatePosition = _inputControl.Player.Look.ReadValue<Vector2>();
     }

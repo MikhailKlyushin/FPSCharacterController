@@ -29,6 +29,7 @@ public class CharacterCameraView : MonoBehaviour
         var smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
         transform.position = smoothVector;
         
+        //TODO:Add parameter t to config like for SmoothSpeed
         transform.rotation =Quaternion.Lerp(transform.rotation, RotateToPosition(positionToRotate), 0.8f);
     }
 

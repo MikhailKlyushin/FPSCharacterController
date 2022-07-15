@@ -5,6 +5,8 @@ public class SceneInstaller : MonoInstaller
     public override void InstallBindings()
     {
         SignalBusInstaller.Install(Container);
+        
+        //TODO: It may just DeclareSignal()
         Container.DeclareSignalWithInterfaces<SignalInputProvider>();
 
         Container.Bind(typeof(IInputProvider), typeof(IInitializable)).To<InputKeyAndMouse>().AsSingle();
