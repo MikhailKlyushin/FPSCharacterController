@@ -1,4 +1,6 @@
+using System;
 using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -9,13 +11,21 @@ public class CharacterCameraView : MonoBehaviour
     
     private Vector3 _rotationVector;
     private Transform _targetForCamera;
+    private IInputProvider _input;
     private CameraConfig _config;
+    
+    private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
     [Inject]
-    private void Construct(SignalBus signalBus, CameraConfig config)
+    private void Construct(IInputProvider input, CameraConfig config)
     {
-        signalBus.Subscribe<SignalInputProvider>(input => ChangeCameraPosition(input.PositionToMove, input.PositionToRotate));
+        _input = input;
         _config = config;
+    }
+
+    private void Start()
+    {
+        _input.RotatePosition.Subscribe(ChangeCameraPosition).AddTo(_disposable);
     }
 
     public void SetTarget(Transform target)
@@ -23,14 +33,13 @@ public class CharacterCameraView : MonoBehaviour
         _targetForCamera = target;
     }
 
-    private void ChangeCameraPosition(Vector3 positionToMove, Vector3 positionToRotate)
+    private void ChangeCameraPosition(Vector3 positionToRotate)
     {
         var position = _targetForCamera.transform.position;
         var smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
         transform.position = smoothVector;
         
-        //TODO:Add parameter t to config like for SmoothSpeed
-        transform.rotation =Quaternion.Lerp(transform.rotation, RotateToPosition(positionToRotate), 0.8f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, RotateToPosition(positionToRotate), _config.SmoothRotate);
     }
 
     private Quaternion RotateToPosition(Vector3 positionToRotate)

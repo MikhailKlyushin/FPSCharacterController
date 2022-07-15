@@ -12,6 +12,7 @@ public class CameraConfig : ScriptableObject
     [SerializeField] private float _maximumVerticalAngle = 45f;
     
     [SerializeField] private float _smoothSpeed = 0.15f;
+    [SerializeField] private float _smoothRotate= 0.8f;
 
 
     public string PathToPrefab => _pathToPrefab;
@@ -20,4 +21,5 @@ public class CameraConfig : ScriptableObject
     public float MinimumVerticalAngle => _minimumVerticalAngle;
     public float MaximumVerticalAngle => _maximumVerticalAngle;
     public float SmoothSpeed => _smoothSpeed;
+    public float SmoothRotate => _smoothRotate;
 }

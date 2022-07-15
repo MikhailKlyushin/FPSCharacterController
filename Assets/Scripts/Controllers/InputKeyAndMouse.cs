@@ -1,77 +1,45 @@
-using DG.Tweening;
 using UniRx;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 public class InputKeyAndMouse : IInputProvider, IInitializable
 {
-    private StarterAssets _inputControl;
-
-    private Vector2 _movePosition;
-    private Vector2 _rotatePosition;
-
-    private float _rotationX;
-    private float _rotationY;
+    public ReactiveProperty<Vector3> MovePosition { get; } = new ReactiveProperty<Vector3>();
+    public ReactiveProperty<Vector3> RotatePosition { get; } = new ReactiveProperty<Vector3>();
     
-    //TODO: use the reactive properties, they're faster than the signals
-    private readonly SignalBus _signalBus;
-    private SignalInputProvider _input;
+    private readonly ReactiveProperty<Vector2> _movePosition = new ReactiveProperty<Vector2>();
+    private readonly ReactiveProperty<Vector2> _rotatePosition = new ReactiveProperty<Vector2>();
     
     private readonly CompositeDisposable _disposable = new CompositeDisposable();
-
-    private InputKeyAndMouse(SignalBus signalBus)
-    {
-        _signalBus = signalBus;
-    }
+    
+    private StarterAssets _inputControl;
+    
 
     public void Initialize()
     {
         _inputControl = new StarterAssets();
         _inputControl.Enable();
-        Start();
-    }
-
-    private void Start()
-    {
-        //TODO: It's empty
-        SubscribeToKeyPress();
         
-        //TODO: Russian comments again
-        //TODO: It's useless because you can to subscribe on the perform input event (see todo in GetInputVectors()
-        Observable.EveryFixedUpdate() // поток update
+        Observable.EveryFixedUpdate()
             .Subscribe(_ =>
             {
-                GetInputVectors();
-                SetMoveAndRotatePosition();
+                _movePosition.SetValueAndForceNotify(_inputControl.Player.Move.ReadValue<Vector2>());
+                _rotatePosition.SetValueAndForceNotify(_inputControl.Player.Look.ReadValue<Vector2>());
             }).AddTo(_disposable);
+
+        FormatInputVectors();
     }
-    
-    private void SubscribeToKeyPress()
+
+    private void FormatInputVectors()
     {
-        //set keys
-    }
-    
-    private void GetInputVectors()
-    {
-        //TODO: Try like this:
-        // _inputControl.Player.Move.performed +=
-        //         context => reactiveProperty.SetValueAndForceNotify(context.ReadValue<Vector2>()); 
+        _movePosition.Subscribe(vector2 =>
+        {
+            MovePosition.SetValueAndForceNotify(Vector3.Lerp(MovePosition.Value, new Vector3(vector2.x, 0, vector2.y), 0.2f));
+        }).AddTo(_disposable);
         
-        _movePosition = _inputControl.Player.Move.ReadValue<Vector2>();
-        _rotatePosition = _inputControl.Player.Look.ReadValue<Vector2>();
+        _rotatePosition.Subscribe(vector2 =>
+        {
+            RotatePosition.SetValueAndForceNotify(new Vector3(vector2.y, vector2.x, 0));
+        }).AddTo(_disposable);
     }
-
-    private void SetMoveAndRotatePosition()
-    {
-        //TODO: rewrite input
-        //_input.PositionToMove = new Vector3(_movePosition.x, 0, _movePosition.y);
-        _input.PositionToMove = Vector3.Lerp(_input.PositionToMove, new Vector3(_movePosition.x, 0, _movePosition.y), 0.2f);
-        
-        _input.PositionToRotate = new Vector3(_rotatePosition.y, _rotatePosition.x, 0);
-
-        InputEventNotification();
-    }
-
-    private void InputEventNotification() => _signalBus.Fire(_input);
 }

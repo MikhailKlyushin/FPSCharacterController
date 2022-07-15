@@ -47,7 +47,6 @@ public class CharacterView : MonoBehaviour, IIdentified
 
         _model.RotateY.Subscribe(angle =>
         {
-            //transform.rotation = angle;
             transform.rotation = Quaternion.Lerp(transform.rotation, angle, 0.4f);
 
         }).AddTo(_disposable);

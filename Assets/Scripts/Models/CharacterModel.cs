@@ -7,38 +7,50 @@ public class CharacterModel : IIdentified
 {
     public string ID => _characterID;
     public float MoveSpeed => _config.MoveSpeed;
-    //public Vector3 InputVector => _inputVector;
     public ReactiveProperty<Vector3> InputVector { get; } = new ReactiveProperty<Vector3>();
     public ReactiveProperty<Vector3> Velocity { get; } = new ReactiveProperty<Vector3>();
     public ReactiveProperty<Quaternion> RotateY { get; } = new ReactiveProperty<Quaternion>();
 
     private readonly string _characterID = Guid.NewGuid().ToString();
+    private readonly CompositeDisposable _disposable = new CompositeDisposable();
     private readonly CharacterConfig _config;
-
+    private readonly IInputProvider _input;
+    
     private Vector3 _rotationVectorY;
     private Vector3 _velocity;
     private float _rotationPositionY;
     private Quaternion _rotateY;
     
 
-    public CharacterModel(SignalBus signalBus, CharacterConfig config)
+    public CharacterModel(IInputProvider input, CharacterConfig config)
     {
         _config = config;
-        ConnectInputNotification(signalBus);
+        _input = input;
+
+        ConnectInputNotification();
     }
 
-    private void ConnectInputNotification(SignalBus signalBus)
+    private void ConnectInputNotification()
     {
-        signalBus.Subscribe<SignalInputProvider>(input => ChangeCharacterPosition(input.PositionToMove, input.PositionToRotate));
+        _input.MovePosition.Subscribe(positionToMove =>
+        {
+            InputVector.SetValueAndForceNotify(positionToMove);
+            MoveToPosition(positionToMove);
+        }).AddTo(_disposable);
+
+        _input.RotatePosition.Subscribe(positionToRotate =>
+        {
+            RotateToPosition(positionToRotate);
+        }).AddTo(_disposable);
     }
 
-    private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
+    /*private void ChangeCharacterPosition(Vector3 positionToMove, Vector3 positionToRotate)
     {
         InputVector.SetValueAndForceNotify(positionToMove);
         
         MoveToPosition(positionToMove);
         RotateToPosition(positionToRotate);
-    }
+    }*/
 
     private void MoveToPosition(Vector3 positionToMove)
     {
