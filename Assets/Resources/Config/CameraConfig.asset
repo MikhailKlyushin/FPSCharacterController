@@ -18,3 +18,4 @@ MonoBehaviour:
   _minimumVerticalAngle: -45
   _maximumVerticalAngle: 45
   _smoothSpeed: 0.15
+  _smoothRotate: 0.8

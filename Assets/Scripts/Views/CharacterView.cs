@@ -10,6 +10,9 @@ public class CharacterView : MonoBehaviour, IIdentified
     private Rigidbody _rigidbody;
     private Animator _animator;
 
+    private Vector3 _velocity;
+    private Quaternion _rotate;
+    
     private float _directionHorizontal;
     private float _directionVertical;
     
@@ -33,22 +36,27 @@ public class CharacterView : MonoBehaviour, IIdentified
         {
             _directionHorizontal = inputVector.x;
             _directionVertical = inputVector.z;
-
-            SetAnimatorParams();
-
         }).AddTo(_disposable);
         
         _model.Velocity.Subscribe(velocity =>
         {
-            _rigidbody.velocity = transform.TransformDirection(velocity);
-            Debug.DrawRay(transform.position, velocity, Color.green);
-            
+            _velocity = velocity;
         }).AddTo(_disposable);
 
-        _model.RotateY.Subscribe(angle =>
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, angle, 0.4f);
 
+        _model.RotateY.Subscribe(rotate =>
+        {
+            _rotate = rotate;
+        }).AddTo(_disposable);
+        
+        Observable.EveryFixedUpdate().Subscribe(_ =>
+        {
+            _rigidbody.velocity = transform.TransformDirection(_velocity);
+            Debug.DrawRay(transform.position, _velocity, Color.green);
+            
+            transform.rotation = Quaternion.Lerp(transform.rotation, _rotate, 0.4f);
+            
+            SetAnimatorParams();
         }).AddTo(_disposable);
     }
 

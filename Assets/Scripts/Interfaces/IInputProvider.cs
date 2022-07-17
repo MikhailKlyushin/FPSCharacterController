@@ -3,6 +3,6 @@ using UnityEngine;
 
 public interface IInputProvider
 {
-    public ReactiveProperty<Vector3> MovePosition { get; }
-    public ReactiveProperty<Vector3> RotatePosition { get; }
+    public ReadOnlyReactiveProperty<Vector2> MovePosition { get; }
+    public ReadOnlyReactiveProperty<Vector2> RotatePosition { get; }
 }

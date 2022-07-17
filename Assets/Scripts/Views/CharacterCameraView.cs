@@ -7,13 +7,15 @@ using Zenject;
 public class CharacterCameraView : MonoBehaviour
 {
     private float _verticalRotateByX;
-    private float _horizontalRotateByY;
+    //TODO: Delete comments
+    //private float _horizontalRotateByY;
     
     private Vector3 _rotationVector;
+    private Vector3 _positionToRotateVector3;
     private Transform _targetForCamera;
     private IInputProvider _input;
     private CameraConfig _config;
-    
+
     private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
     [Inject]
@@ -23,23 +25,28 @@ public class CharacterCameraView : MonoBehaviour
         _config = config;
     }
 
-    private void Start()
-    {
-        _input.RotatePosition.Subscribe(ChangeCameraPosition).AddTo(_disposable);
-    }
-
     public void SetTarget(Transform target)
     {
         _targetForCamera = target;
     }
 
-    private void ChangeCameraPosition(Vector3 positionToRotate)
+    private void Start()
     {
-        var position = _targetForCamera.transform.position;
-        var smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
-        transform.position = smoothVector;
+        _input.RotatePosition.Subscribe(ChangeCameraPosition).AddTo(_disposable);
         
-        transform.rotation = Quaternion.Lerp(transform.rotation, RotateToPosition(positionToRotate), _config.SmoothRotate);
+        Observable.EveryFixedUpdate().Subscribe(_ =>
+        {
+            var position = _targetForCamera.transform.position;
+            var smoothVector = Vector3.Lerp(transform.position, position, _config.SmoothSpeed);
+            transform.position = smoothVector;
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, RotateToPosition(_positionToRotateVector3), _config.SmoothRotate);
+        }).AddTo(_disposable);
+    }
+
+    private void ChangeCameraPosition(Vector2 positionToRotate)
+    {
+        _positionToRotateVector3 = new Vector3(positionToRotate.y, positionToRotate.x, 0);
     }
 
     private Quaternion RotateToPosition(Vector3 positionToRotate)
@@ -47,12 +54,12 @@ public class CharacterCameraView : MonoBehaviour
         _verticalRotateByX -= positionToRotate.x * _config.SensitivityVertical * Time.deltaTime;
         _verticalRotateByX = Mathf.Clamp(_verticalRotateByX, _config.MinimumVerticalAngle, _config.MaximumVerticalAngle);
         
-        var delta = positionToRotate.y * _config.SensitivityHorizontal * Time.deltaTime;
-        _horizontalRotateByY += delta;
-
+        //var delta = positionToRotate.y * _config.SensitivityHorizontal * Time.deltaTime;
+        //_horizontalRotateByY += delta;
+        
         _rotationVector.x = _verticalRotateByX;
-        _rotationVector.y = _horizontalRotateByY;
-
-        return Quaternion.Euler(_rotationVector);
+        //_rotationVector.y = _horizontalRotateByY;
+        var cameraRotate = _targetForCamera.transform.rotation;
+        return  cameraRotate *= Quaternion.Euler(_rotationVector);
     }
 }

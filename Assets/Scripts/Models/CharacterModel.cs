@@ -34,13 +34,16 @@ public class CharacterModel : IIdentified
     {
         _input.MovePosition.Subscribe(positionToMove =>
         {
-            InputVector.SetValueAndForceNotify(positionToMove);
-            MoveToPosition(positionToMove);
+            var positionToMoveVector3 = new Vector3(positionToMove.x, 0, positionToMove.y);
+            InputVector.SetValueAndForceNotify(positionToMoveVector3);
+            
+            MoveToPosition(positionToMoveVector3);
         }).AddTo(_disposable);
 
         _input.RotatePosition.Subscribe(positionToRotate =>
         {
-            RotateToPosition(positionToRotate);
+            var positionToRotateVector3 = new Vector3(positionToRotate.y, positionToRotate.x, 0);
+            RotateToPosition(positionToRotateVector3);
         }).AddTo(_disposable);
     }
 
@@ -48,7 +51,6 @@ public class CharacterModel : IIdentified
     {
         _velocity = positionToMove;
         _velocity *= _config.MoveSpeed;
-        
         Velocity.SetValueAndForceNotify(_velocity);
     }
 
