@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9779ec677a36ca74b988a6f2fb63dda4, type: 3}
   m_Name: CameraConfig
   m_EditorClassIdentifier: 
-  _pathToPrefab: Prefabs/ThirdPersonCamera
+  _cameraPrefab: {fileID: 1302046434873789350, guid: 9b8757270c7e40241b8c81d4f816eb7d, type: 3}
   _sensitivityHorisontal: 500
   _sensitivityVertical: 500
   _minimumVerticalAngle: -45

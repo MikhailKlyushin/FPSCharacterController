@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50ff47545592924b8fd2fe5aae8fa46, type: 3}
   m_Name: CharacterViewConfig
   m_EditorClassIdentifier: 
-  _pathToPrefab: Prefabs/CharacterSWAT
+  _characterPrefab: {fileID: 5635260585884856871, guid: e9d255bb9c04c8e4cbb4fa9f22c87279, type: 3}

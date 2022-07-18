@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ViewConfig : ScriptableObject
 {
-    [SerializeField] private string _pathToPrefab = "Prefabs/CharacterSWAT";
+    [SerializeField] private GameObject _characterPrefab;
     
-    public string PathToPrefab => _pathToPrefab;
+    public GameObject CharacterPrefab => _characterPrefab;
 }

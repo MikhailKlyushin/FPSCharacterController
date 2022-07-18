@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CameraConfig", menuName = "Configuration Script/Camera Config", order = 1)]
 public class CameraConfig : ScriptableObject
 {
-    [SerializeField] private string _pathToPrefab = "Prefabs/ThirdPersonCamera";
+    [SerializeField] private GameObject _cameraPrefab;
     
     [SerializeField] private float _sensitivityHorisontal = 20f;
     [SerializeField] private float _sensitivityVertical = 20f;
@@ -15,7 +15,7 @@ public class CameraConfig : ScriptableObject
     [SerializeField] private float _smoothRotate= 0.8f;
 
 
-    public string PathToPrefab => _pathToPrefab;
+    public GameObject CameraPrefab => _cameraPrefab;
     public float SensitivityHorizontal => _sensitivityHorisontal;
     public float SensitivityVertical => _sensitivityVertical;
     public float MinimumVerticalAngle => _minimumVerticalAngle;
