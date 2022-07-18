@@ -12,12 +12,12 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
     
     private readonly CompositeDisposable _disposable = new CompositeDisposable();
     
-    private StarterAssets _inputControl;
+    private InputControl _inputControl;
     
 
     public void Initialize()
     {
-        _inputControl = new StarterAssets();
+        _inputControl = new InputControl();
         _inputControl.Enable();
         
         Observable.EveryFixedUpdate()
