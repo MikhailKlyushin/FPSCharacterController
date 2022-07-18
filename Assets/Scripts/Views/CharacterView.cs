@@ -19,6 +19,7 @@ public class CharacterView : MonoBehaviour, IIdentified
     private readonly int _horizontal = Animator.StringToHash("Horizontal");
     private readonly int _vertical = Animator.StringToHash("Vertical");
     
+    //TODO: You dont dispose streams!!! Use .AddTo(this) - this dispose the stream after destroy GO
     private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
     public void SetModel(CharacterModel model)
@@ -29,6 +30,7 @@ public class CharacterView : MonoBehaviour, IIdentified
 
     private void Start()
     {
+        //TODO: if you want to get components correctly, add [RequireComponent] attribute under class
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
 

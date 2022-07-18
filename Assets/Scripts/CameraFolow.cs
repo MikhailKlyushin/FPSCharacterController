@@ -1,3 +1,4 @@
+//TODO: useless class
 /*
 using Cinemachine;
 using UnityEngine;

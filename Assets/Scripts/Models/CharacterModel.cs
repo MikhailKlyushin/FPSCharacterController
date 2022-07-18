@@ -12,6 +12,8 @@ public class CharacterModel : IIdentified
     public ReactiveProperty<Quaternion> RotateY { get; } = new ReactiveProperty<Quaternion>();
 
     private readonly string _characterID = Guid.NewGuid().ToString();
+    
+    //TODO: You dont dispose streams!!!
     private readonly CompositeDisposable _disposable = new CompositeDisposable();
     private readonly CharacterConfig _config;
     private readonly IInputProvider _input;
@@ -35,6 +37,8 @@ public class CharacterModel : IIdentified
         _input.MovePosition.Subscribe(positionToMove =>
         {
             var positionToMoveVector3 = new Vector3(positionToMove.x, 0, positionToMove.y);
+            
+            //TODO: Don't use public variables in this class
             InputVector.SetValueAndForceNotify(positionToMoveVector3);
             
             MoveToPosition(positionToMoveVector3);
@@ -51,6 +55,8 @@ public class CharacterModel : IIdentified
     {
         _velocity = positionToMove;
         _velocity *= _config.MoveSpeed;
+        
+        //TODO: Don't use public variables in this class
         Velocity.SetValueAndForceNotify(_velocity);
     }
 
@@ -62,6 +68,7 @@ public class CharacterModel : IIdentified
         _rotationVectorY.y = _rotationPositionY;
         _rotateY = Quaternion.Euler(_rotationVectorY);
         
+        //TODO: Don't use public variables in this class
         RotateY.Value = Quaternion.Lerp(RotateY.Value, _rotateY, _config.SmoothRotate);
     }
 }

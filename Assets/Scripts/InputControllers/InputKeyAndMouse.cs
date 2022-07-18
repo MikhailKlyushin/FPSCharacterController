@@ -10,6 +10,7 @@ public class InputKeyAndMouse : IInputProvider, IInitializable
     private readonly ReactiveProperty<Vector2> _movePosition = new ReactiveProperty<Vector2>();
     private readonly ReactiveProperty<Vector2> _rotatePosition = new ReactiveProperty<Vector2>();
     
+    //TODO: You dont dispose streams!!!
     private readonly CompositeDisposable _disposable = new CompositeDisposable();
     
     private InputControl _inputControl;

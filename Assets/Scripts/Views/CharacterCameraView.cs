@@ -6,8 +6,8 @@ using Zenject;
 
 public class CharacterCameraView : MonoBehaviour
 {
-    private float _verticalRotateByX;
     //TODO: Delete comments
+    private float _verticalRotateByX;
     //private float _horizontalRotateByY;
     
     private Vector3 _rotationVector;
@@ -16,6 +16,7 @@ public class CharacterCameraView : MonoBehaviour
     private IInputProvider _input;
     private CameraConfig _config;
 
+    //TODO: You dont dispose streams!!! Use .AddTo(this) - this dispose the stream after destroy GO
     private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
     [Inject]

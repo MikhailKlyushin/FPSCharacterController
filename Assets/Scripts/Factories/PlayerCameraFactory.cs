@@ -14,6 +14,8 @@ public class PlayerCameraFactory : PlaceholderFactory<CharacterCameraView>
 
     public CharacterCameraView Create(Transform target)
     {
+        //TODO: _container.InstantiatePrefabResourceForComponent<CharacterCameraView>(_config.PathToPrefab);
+        //but better use config with prefab reference and resolve it here and create from container through _container.InstantiatePrefab
         var prefabCamera = Resources.Load<GameObject>(_config.PathToPrefab);
         var view = _container.InstantiatePrefabForComponent<CharacterCameraView>(prefabCamera);
         view.SetTarget(target);
