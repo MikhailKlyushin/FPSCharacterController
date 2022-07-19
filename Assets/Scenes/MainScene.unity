@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 1313512483}
   - component: {fileID: 1313512482}
   - component: {fileID: 1313512481}
+  - component: {fileID: 1313512484}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -413,10 +414,10 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1313512481}
-    PlayerPrefab: {fileID: 7665520171016536813, guid: 3187553ad6f457f489e6624fe666f23f, type: 3}
+    PlayerPrefab: {fileID: 0}
     NetworkPrefabs:
     - Override: 0
-      Prefab: {fileID: 8824887488353955082, guid: c71f12b57096f59468c25b53fc9cef00, type: 3}
+      Prefab: {fileID: 5635260585884856871, guid: e9d255bb9c04c8e4cbb4fa9f22c87279, type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
@@ -449,6 +450,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1313512484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313512480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66967c229eac54419bf88d7ed8582b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1732011693
 GameObject:
   m_ObjectHideFlags: 0

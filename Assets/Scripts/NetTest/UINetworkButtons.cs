@@ -9,17 +9,17 @@ public class UINetworkButtons : MonoBehaviour
 
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
-            if (GUILayout.Button("Host"))
+            if (GUILayout.Button("Host", GUILayout.Height(40)))
             {
                 NetworkManager.Singleton.StartHost();
             }
             
-            if (GUILayout.Button("Server"))
+            if (GUILayout.Button("Server", GUILayout.Height(40)))
             {
                 NetworkManager.Singleton.StartServer();
             }
             
-            if (GUILayout.Button("Client"))
+            if (GUILayout.Button("Client", GUILayout.Height(40)))
             {
                 NetworkManager.Singleton.StartClient();
             }
