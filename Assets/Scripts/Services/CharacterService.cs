@@ -66,6 +66,11 @@ public class CharacterService
         return view.ID;
     }
 
+    public CharacterModel CreateAndGetModelForNetPlayer()
+    {
+        return CreateModel();
+    }
+
     private CharacterModel CreateModel()
     {
         var playerModel = _playerModelFactory.Create();
@@ -82,4 +87,5 @@ public class CharacterService
 
         return playerView;
     }
+    
 }

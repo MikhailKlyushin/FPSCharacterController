@@ -4,10 +4,10 @@ using Zenject;
 
 public class CreatePlayerNetRule : IInitializable
 {
-    private GameObject m_PrefabInstance;
-    private NetworkObject m_SpawnedNetworkObject;
     private CharacterService _playerService;
-    
+    private NetworkObject _spawnedPlayerObject;
+    private ulong _clientId;
+
     [Inject]
     public void Construct(CharacterService service)
     {
@@ -18,19 +18,29 @@ public class CreatePlayerNetRule : IInitializable
     {
         NetworkManager.Singleton.OnClientConnectedCallback += clientId =>
         {
-            var playerID = _playerService.CreatePlayer();
-            var playerView = _playerService.GetView(playerID);
-            var cameraView = _playerService.CreatePlayerCamera(playerView.transform);
-            Debug.Log("id = " + playerID);
-            var playerObject = playerView.gameObject;
+            _clientId = clientId;
+            Debug.Log("Client ID = " + clientId);
+            _spawnedPlayerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
+            var playerObject = _spawnedPlayerObject.gameObject;
+            
+            var ownerId = playerObject.GetComponent<ClientIsOwner>().OwnerId;
 
-            // Optional, this example applies the spawner's position and rotation to the new instance
-            playerObject.transform.position = Vector3.zero;
-            playerObject.transform.rotation = new Quaternion();
-
-            // Get the instance's NetworkObject and Spawn
-            m_SpawnedNetworkObject = playerObject.GetComponent<NetworkObject>();
-            m_SpawnedNetworkObject.SpawnWithOwnership(clientId);
+            if (clientId == ownerId)
+            {
+                //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
+                var model = _playerService.CreateAndGetModelForNetPlayer();
+                Debug.Log("Model ID = " + model.ID);
+                var view = playerObject.GetComponent<CharacterView>();
+                view.SetModel(model);
+                Debug.Log("View ID = " + view.ID);
+            }
+        };
+        NetworkManager.Singleton.OnClientDisconnectCallback += clientId =>
+        {
+            if ((_clientId == clientId) && (_spawnedPlayerObject != null) && _spawnedPlayerObject.IsSpawned)
+            {
+                _spawnedPlayerObject.Despawn();
+            }
         };
     }
 }
