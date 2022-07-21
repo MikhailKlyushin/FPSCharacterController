@@ -23,9 +23,9 @@ public class CreatePlayerNetRule : IInitializable
             _spawnedPlayerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
             var playerObject = _spawnedPlayerObject.gameObject;
             
-            var ownerId = playerObject.GetComponent<ClientIsOwner>().OwnerId;
+            var clientComponent = playerObject.GetComponent<ClientIsOwner>();
 
-            if (clientId == ownerId)
+            if (clientId == clientComponent.OwnerClientId && clientComponent.IsLocalPlayer)
             {
                 //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
                 var model = _playerService.CreateAndGetModelForNetPlayer();
