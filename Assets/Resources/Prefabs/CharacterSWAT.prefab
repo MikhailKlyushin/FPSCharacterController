@@ -1562,8 +1562,7 @@ GameObject:
   - component: {fileID: 1643792930116715648}
   - component: {fileID: -864660210709715482}
   - component: {fileID: -135938005073523724}
-  - component: {fileID: 126461755135290097}
-  - component: {fileID: -9094908532569214832}
+  - component: {fileID: 2265041500856800950}
   m_Layer: 0
   m_Name: CharacterSWAT
   m_TagString: Untagged
@@ -1715,7 +1714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Animator: {fileID: 5635260585884856864}
---- !u!114 &126461755135290097
+--- !u!114 &2265041500856800950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1728,18 +1727,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Smooth: 0.1
---- !u!114 &-9094908532569214832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5635260585884856871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02114297bbebc3649a2b05ab6da1fc46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5635260585925462996
 GameObject:
   m_ObjectHideFlags: 0
