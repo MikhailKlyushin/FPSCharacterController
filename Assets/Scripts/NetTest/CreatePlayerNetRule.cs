@@ -25,7 +25,7 @@ public class CreatePlayerNetRule : IInitializable
             
             var clientComponent = playerObject.GetComponent<ClientIsOwner>();
 
-            if (clientId == clientComponent.OwnerClientId && clientComponent.IsLocalPlayer)
+            if (clientId == clientComponent.OwnerClientId)// && clientComponent.IsLocalPlayer)
             {
                 //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
                 var model = _playerService.CreateAndGetModelForNetPlayer();
@@ -34,6 +34,10 @@ public class CreatePlayerNetRule : IInitializable
                 view.SetModel(model);
                 Debug.Log("View ID = " + view.ID);
             }
+            // else if (!clientComponent.IsLocalPlayer)
+            // {
+            //     Debug.Log("CREATE GHOST PLAYER!!!!");
+            // }
         };
         NetworkManager.Singleton.OnClientDisconnectCallback += clientId =>
         {

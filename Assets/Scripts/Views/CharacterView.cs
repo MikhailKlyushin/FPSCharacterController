@@ -1,9 +1,10 @@
 using UniRx;
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
 
-public class CharacterView : MonoBehaviour, IIdentified
+public class CharacterView : NetworkBehaviour, IIdentified
 {
     public string ID => _characterID;
     private string _characterID;
@@ -12,8 +13,11 @@ public class CharacterView : MonoBehaviour, IIdentified
     private Rigidbody _rigidbody;
     private Animator _animator;
 
-    private Vector3 _velocity;
-    private Quaternion _rotate;
+    private Vector3 _velocityModel;
+    private Quaternion _rotateModel;
+
+    private NetworkVariable<Vector3> _velocity = new NetworkVariable<Vector3>();
+    private NetworkVariable<Quaternion> _rotate = new NetworkVariable<Quaternion>();
     
     private float _directionHorizontal;
     private float _directionVertical;
@@ -39,24 +43,21 @@ public class CharacterView : MonoBehaviour, IIdentified
             _directionVertical = inputVector.z;
         }).AddTo(_disposables);
         
-        _model.Velocity.Subscribe(velocity =>
-        {
-            _velocity = velocity;
-        }).AddTo(_disposables);
+        _model.Velocity.Subscribe(velocity => { _velocityModel = velocity; }).AddTo(_disposables);
+        _model.RotateY.Subscribe(rotate => { _rotateModel = rotate; }).AddTo(_disposables);
 
-
-        _model.RotateY.Subscribe(rotate =>
-        {
-            _rotate = rotate;
-        }).AddTo(_disposables);
-        
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
-            _rigidbody.velocity = transform.TransformDirection(_velocity);
-            Debug.DrawRay(transform.position, _velocity, Color.green);
+            if (IsClient && IsOwner)
+            {
+                UpdateClientPositionAndRotationServerRpc(_velocityModel, _rotateModel);
+            }
             
-            transform.rotation = Quaternion.Lerp(transform.rotation, _rotate, 0.4f);
+            _rigidbody.velocity = transform.TransformDirection(_velocity.Value);
+            Debug.DrawRay(transform.position, _velocity.Value, Color.green);
             
+            transform.rotation = Quaternion.Lerp(transform.rotation, _rotate.Value, 0.4f);
+
             SetAnimatorParams();
         }).AddTo(_disposables);
     }
@@ -71,6 +72,13 @@ public class CharacterView : MonoBehaviour, IIdentified
     {
         _animator.SetFloat(_horizontal, _directionHorizontal);
         _animator.SetFloat(_vertical, _directionVertical);
-        _animator.speed = _model.MoveSpeed;
+        _animator.speed = 3f; //_model.MoveSpeed;
+    }
+    
+    [ServerRpc]
+    public void UpdateClientPositionAndRotationServerRpc(Vector3 newPosition, Quaternion newRotate)
+    {
+        _velocity.Value = newPosition;
+        _rotate.Value = newRotate;
     }
 }
