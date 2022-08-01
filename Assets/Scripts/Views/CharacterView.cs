@@ -12,7 +12,7 @@ public class CharacterView : NetworkBehaviour, IIdentified
     public string ID => _characterID;
     private string _characterID;
 
-    private CharacterModel _model;
+    private ICharacterModel _model;
     private Rigidbody _rigidbody;
     private Animator _animator;
 
@@ -22,10 +22,14 @@ public class CharacterView : NetworkBehaviour, IIdentified
     private float _directionHorizontalClient;
     private float _directionVerticalClient;
 
-    private NetworkVariable<Vector3> _velocity = new NetworkVariable<Vector3>();
-    private NetworkVariable<Quaternion> _rotate = new NetworkVariable<Quaternion>();
-    private NetworkVariable<float> _directionHorizontal = new NetworkVariable<float>();
-    private NetworkVariable<float> _directionVertical = new NetworkVariable<float>();
+    private NetworkVariable<Vector3> _velocity = new NetworkVariable<Vector3>(default, 
+        NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<Quaternion> _rotate = new NetworkVariable<Quaternion>(default, 
+        NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> _directionHorizontal = new NetworkVariable<float>(default, 
+        NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> _directionVertical = new NetworkVariable<float>(default, 
+        NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Owner);
     
 
     private readonly int _horizontal = Animator.StringToHash("Horizontal");
@@ -40,24 +44,47 @@ public class CharacterView : NetworkBehaviour, IIdentified
 
     public void SetModel(CharacterModel model)
     {
-        _model = model;
-        _characterID = model.ID;
-        
-        _model.InputVector.Subscribe(inputVector =>
+        if (IsClient)
         {
-            _directionHorizontalClient = inputVector.x;
-            _directionVerticalClient = inputVector.z;
-        }).AddTo(_disposables);
-        
-        _model.Velocity.Subscribe(velocity => { _velocityClient = velocity; }).AddTo(_disposables);
-        _model.RotateY.Subscribe(rotate => { _rotateClient = rotate; }).AddTo(_disposables);
+            _model = model;
+
+            _characterID = model.ID;
+
+            _model.InputVector.Subscribe(inputVector =>
+            {
+                _directionHorizontalClient = inputVector.x;
+                _directionVerticalClient = inputVector.z;
+            }).AddTo(_disposables);
+
+            _model.Velocity.Subscribe(velocity => { _velocityClient = velocity; }).AddTo(_disposables);
+            _model.RotateY.Subscribe(rotate => { _rotateClient = rotate; }).AddTo(_disposables);
+        }
+        else
+        {
+            _model = new CharacterNetworkModel();
+        }
 
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
-            if (IsOwner)
+            if (IsServer && IsOwner)
             {
-                UpdateClientPositionAndRotationServerRpc(_velocityClient, _rotateClient);
-                UpdateClientAnimatorServerRpc(_directionHorizontalClient, _directionVerticalClient);
+                _velocity.Value = _velocityClient;
+                _rotate.Value = _rotateClient;
+                _directionHorizontal.Value = _directionHorizontalClient;
+                _directionVertical.Value = _directionVerticalClient;
+            }
+            else if (IsClient && IsOwner)
+            {
+                _velocity.OnValueChanged?.Invoke(_velocity.Value, _velocityClient);
+                _rotate.OnValueChanged?.Invoke(_rotate.Value, _rotateClient);
+                _directionHorizontal.OnValueChanged?.Invoke(_directionHorizontal.Value, _directionHorizontalClient);
+                _directionVertical.OnValueChanged?.Invoke(_directionVertical.Value, _directionVerticalClient);
+                _velocity.Value = _velocityClient;
+                _rotate.Value = _rotateClient;
+                _directionHorizontal.Value = _directionHorizontalClient;
+                _directionVertical.Value = _directionVerticalClient;
+                //UpdateClientPositionAndRotation(_velocityClient, _rotateClient);
+                //UpdateClientAnimator(_directionHorizontalClient, _directionVerticalClient);
             }
             
             _rigidbody.velocity = transform.TransformDirection(_velocity.Value);
@@ -85,15 +112,13 @@ public class CharacterView : NetworkBehaviour, IIdentified
         _animator.speed = 3f; //_model.MoveSpeed;   TODO: rewrite via config
     }
     
-    [ServerRpc]
-    private void UpdateClientPositionAndRotationServerRpc(Vector3 newPosition, Quaternion newRotate)
+    private void UpdateClientPositionAndRotation(Vector3 newPosition, Quaternion newRotate)
     {
         _velocity.Value = newPosition;
         _rotate.Value = newRotate;
     }
-
-    [ServerRpc]
-    private void UpdateClientAnimatorServerRpc(float newHorizontal, float newVertical)
+    
+    private void UpdateClientAnimator(float newHorizontal, float newVertical)
     {
         _directionHorizontal.Value = newHorizontal;
         _directionVertical.Value = newVertical;

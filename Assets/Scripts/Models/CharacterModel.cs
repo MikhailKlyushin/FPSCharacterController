@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-public class CharacterModel : IIdentified
+public class CharacterModel : ICharacterModel, IIdentified
 {
     public string ID => _characterID;
     public float MoveSpeed => _config.MoveSpeed;

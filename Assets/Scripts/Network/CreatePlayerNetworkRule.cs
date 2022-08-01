@@ -2,16 +2,16 @@ using Unity.Netcode;
 using UnityEngine;
 using Zenject;
 
-public class CreatePlayerNetRule : IInitializable
+public class CreatePlayerNetworkRule : IInitializable
 {
-    private CharacterService _playerService;
+    private CharacterService _characterService;
     private NetworkObject _spawnedPlayerObject;
     private ulong _clientId;
 
     [Inject]
     public void Construct(CharacterService service)
     {
-        _playerService = service;
+        _characterService = service;
     }
 
     public void Initialize()
@@ -23,12 +23,12 @@ public class CreatePlayerNetRule : IInitializable
             _spawnedPlayerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
             var playerObject = _spawnedPlayerObject.gameObject;
             
-            var clientComponent = playerObject.GetComponent<ClientOwnerNetComponent>();
+            var clientComponent = playerObject.GetComponent<ClientOwnerNetworkComponent>();
 
             if (clientId == clientComponent.OwnerClientId)
             {
                 //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
-                var model = _playerService.CreateAndGetModelForNetPlayer();
+                var model = _characterService.CreateAndGetModelForNetPlayer();
                 Debug.Log("Model ID = " + model.ID);
                 var view = playerObject.GetComponent<CharacterView>();
                 view.SetModel(model);
