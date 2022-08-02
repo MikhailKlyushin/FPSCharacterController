@@ -15,6 +15,6 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<Storage<CharacterModel>>().AsSingle();
         Container.BindInterfacesAndSelfTo<Storage<CharacterView>>().AsSingle();
 
-        Container.BindInterfacesTo<CreatePlayerNetworkRule>().AsSingle();
+        Container.BindInterfacesTo<CreateClientPlayerNetworkRule>().AsSingle();
     }
 }

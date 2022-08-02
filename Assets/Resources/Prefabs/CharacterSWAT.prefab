@@ -1562,6 +1562,7 @@ GameObject:
   - component: {fileID: 7181014433057006108}
   - component: {fileID: -526799004278433721}
   - component: {fileID: 158257127576336589}
+  - component: {fileID: 8397719868374045967}
   m_Layer: 0
   m_Name: CharacterSWAT
   m_TagString: Untagged
@@ -1711,6 +1712,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb2b5ded82c125840a33469c2e703eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _position:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  _rotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 0}
+  _velocity:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  _rotate:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 0}
+  _directionHorizontal:
+    m_InternalValue: 0
+  _directionVertical:
+    m_InternalValue: 0
+--- !u!114 &8397719868374045967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5635260585884856871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d32407cc6cad440bd93f6806ff7fed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5635260585925462996

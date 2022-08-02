@@ -2,7 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using Zenject;
 
-public class CreatePlayerNetworkRule : IInitializable
+public class CreateClientPlayerNetworkRule : IInitializable
 {
     private CharacterService _characterService;
     private NetworkObject _spawnedPlayerObject;
@@ -30,6 +30,7 @@ public class CreatePlayerNetworkRule : IInitializable
                 //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
                 var model = _characterService.CreateAndGetModelForNetPlayer();
                 Debug.Log("Model ID = " + model.ID);
+                //var view = playerObject.GetComponent<CharacterNetworkView>(); 
                 var view = playerObject.GetComponent<CharacterNetworkView>();
                 view.SetModel(model);
                 Debug.Log("View ID = " + view.ID);
