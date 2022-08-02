@@ -1,23 +1,34 @@
-using System;
 using UniRx;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterView),typeof(Rigidbody), typeof(Animator))]
+
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 
 public class CharacterNetworkView : NetworkBehaviour, IIdentified
 {
     public string ID => _characterID;
     private string _characterID;
-    
-    private CharacterView _view;
+
+    private ICharacterModel _model;
     private Rigidbody _rigidbody;
     private Animator _animator;
     
-    
+    private Vector3 _positionClient;
+    private Vector3 _rotationClient;
 
-    /*private NetworkVariable<Vector3> _velocity = new NetworkVariable<Vector3>(default, 
+    private Vector3 _velocityClient;
+    private Quaternion _rotateClient;
+    
+    private float _directionHorizontalClient;
+    private float _directionVerticalClient;
+    
+    private NetworkVariable<Vector3> _position = new NetworkVariable<Vector3>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<Quaternion> _rotation = new NetworkVariable<Quaternion>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<Vector3> _velocity = new NetworkVariable<Vector3>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<Quaternion> _rotate = new NetworkVariable<Quaternion>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -37,51 +48,59 @@ public class CharacterNetworkView : NetworkBehaviour, IIdentified
         _disposables.Dispose();
     }
 
-    private void Start()
+    public void SetModel(CharacterModel model)
     {
-        _view = GetComponent<CharacterView>();
-        _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
-        
-        var netAnimator = GetComponent<NetworkAnimator>();
-        netAnimator.Animator.speed = _view.CharacterState.SpeedAnimation;
+        _model = model;
 
-        _characterID = _view.ID;
+        _characterID = model.ID;
 
-        if (!IsOwner)
+        _model.InputVector.Subscribe(inputVector =>
         {
-            _view.enabled = false;
-        }
-    }
+            _directionHorizontalClient = inputVector.x;
+            _directionVerticalClient = inputVector.z;
+        }).AddTo(_disposables);
 
-    public override void OnNetworkSpawn()
-    {
+        _model.Velocity.Subscribe(velocity => { _velocityClient = velocity; }).AddTo(_disposables);
+        _model.RotateY.Subscribe(rotate => { _rotateClient = rotate; }).AddTo(_disposables);
+
+
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
             if (IsOwner)
             {
-                _velocity.Value = _view.CharacterState.Velocity;
-                _rotate.Value = _view.CharacterState.Rotate;
-                _directionHorizontal.Value = _view.CharacterState.DirectionHorizontal;
-                _directionVertical.Value = _view.CharacterState.DirectionVertical;
+                _velocity.Value = _velocityClient;
+                _rotate.Value = _rotateClient;
+                _directionHorizontal.Value = _directionHorizontalClient;
+                _directionVertical.Value = _directionVerticalClient;
             }
-            else
-            {
-                _rigidbody.velocity = transform.TransformDirection(_velocity.Value);
-                Debug.DrawRay(transform.position, _velocity.Value, Color.green);
-            
-                transform.rotation = Quaternion.Lerp(transform.rotation, _rotate.Value, 0.4f);
 
-                SetAnimatorParams();
-            }
+            SetCharacterMove(_velocity.Value, _rotate.Value);
+            SetAnimatorParams(_directionHorizontal.Value, _directionVertical.Value, 3f);
+
         }).AddTo(_disposables);
     }
 
-
-    private void SetAnimatorParams()
+    private void Start()
     {
-        _animator.SetFloat(_horizontal, _directionHorizontal.Value);
-        _animator.SetFloat(_vertical, _directionVertical.Value);
-        _animator.speed = _view.CharacterState.SpeedAnimation;
-    }*/
+        _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+        
+        var netAnimator = GetComponent<NetworkAnimator>();  //TODO: rewrite this
+        netAnimator.Animator.speed = 3f;
+    }
+
+    private void SetCharacterMove(Vector3 velocity, Quaternion rotate)
+    {
+        _rigidbody.velocity = transform.TransformDirection(velocity);
+        Debug.DrawRay(transform.position, velocity, Color.green);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotate, 0.4f);
+    }
+
+    private void SetAnimatorParams(float directionHorizontal, float directionVertical, float speed)
+    {
+        _animator.SetFloat(_horizontal, directionHorizontal);
+        _animator.SetFloat(_vertical, directionVertical);
+        _animator.speed = speed;
+    }
 }

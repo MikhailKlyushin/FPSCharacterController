@@ -30,7 +30,7 @@ public class CreatePlayerNetworkRule : IInitializable
                 //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
                 var model = _characterService.CreateAndGetModelForNetPlayer();
                 Debug.Log("Model ID = " + model.ID);
-                var view = playerObject.GetComponent<CharacterView>();
+                var view = playerObject.GetComponent<CharacterNetworkView>();
                 view.SetModel(model);
                 Debug.Log("View ID = " + view.ID);
             }
