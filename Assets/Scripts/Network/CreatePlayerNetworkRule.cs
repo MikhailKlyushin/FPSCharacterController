@@ -29,13 +29,14 @@ public class CreateClientPlayerNetworkRule : IInitializable
             {
                 //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
                 var model = _characterService.CreateAndGetModelForNetPlayer();
-                Debug.Log("Model ID = " + model.ID);
-                //var view = playerObject.GetComponent<CharacterNetworkView>(); 
                 var view = playerObject.GetComponent<CharacterNetworkView>();
                 view.SetModel(model);
+                
+                Debug.Log("Model ID = " + model.ID);
                 Debug.Log("View ID = " + view.ID);
             }
         };
+        
         NetworkManager.Singleton.OnClientDisconnectCallback += clientId =>
         {
             if ((_clientId == clientId) && (_spawnedPlayerObject != null) && _spawnedPlayerObject.IsSpawned)
