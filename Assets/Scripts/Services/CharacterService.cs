@@ -58,7 +58,7 @@ public class CharacterService
         return playerCamera;
     }
 
-    public string CreatePlayer()
+    public string CreateSinglePlayer()
     {
         var model = CreateModel();
         var view = CreateView(model);
@@ -66,7 +66,7 @@ public class CharacterService
         return view.ID;
     }
 
-    public CharacterModel CreateAndGetModelForNetPlayer()
+    public CharacterModel CreateAndGetModelForNetworkPlayer()
     {
         return CreateModel();
     }

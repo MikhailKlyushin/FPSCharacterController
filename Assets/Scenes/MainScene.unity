@@ -414,10 +414,10 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1313512481}
-    PlayerPrefab: {fileID: 5635260585884856871, guid: e9d255bb9c04c8e4cbb4fa9f22c87279, type: 3}
+    PlayerPrefab: {fileID: 691551867302666743, guid: 42746dd2fc0d78a43adeeecddf7c4aee, type: 3}
     NetworkPrefabs:
     - Override: 0
-      Prefab: {fileID: 5635260585884856871, guid: e9d255bb9c04c8e4cbb4fa9f22c87279, type: 3}
+      Prefab: {fileID: 691551867302666743, guid: 42746dd2fc0d78a43adeeecddf7c4aee, type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}

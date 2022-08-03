@@ -18,7 +18,7 @@ public class InitializationPlayer : MonoBehaviour
 
     private void CameraTrackingMode()
     {
-        var playerID = _playerService.CreatePlayer();
+        var playerID = _playerService.CreateSinglePlayer();
         var playerView = _playerService.GetView(playerID);
         var cameraView = _playerService.CreatePlayerCamera(playerView.transform);
     }
