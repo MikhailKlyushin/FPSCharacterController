@@ -1,9 +1,24 @@
 using UniRx;
+using Unity.Netcode;
 using UnityEngine;
 
 
 public class CharacterNetworkView : BaseCharacterNetworkView
 {
+    public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Quaternion> Rotation = new NetworkVariable<Quaternion>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+
+    public NetworkVariable<Vector3> Velocity = new NetworkVariable<Vector3>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
+    public NetworkVariable<float> DirectionHorizontal = new NetworkVariable<float>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> DirectionVertical = new NetworkVariable<float>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
     private Vector3 _velocityClient;
     private Quaternion _rotateClient;
     
@@ -29,8 +44,7 @@ public class CharacterNetworkView : BaseCharacterNetworkView
             if (IsOwner)
             {
                 Position.Value = transform.position;
-                Debug.Log(Position.Value);
-
+                
                 Rotation.Value = _rotateClient;
 
                 Velocity.Value = _velocityClient;
@@ -38,9 +52,8 @@ public class CharacterNetworkView : BaseCharacterNetworkView
                 DirectionHorizontal.Value = _directionHorizontalClient;
                 DirectionVertical.Value = _directionVerticalClient;
 
-                SetCharacterMove(Rotation.Value ,Velocity.Value);
+                SetCharacterMove( Velocity.Value,Position.Value,Rotation.Value);
                 SetAnimatorParams(DirectionHorizontal.Value, DirectionVertical.Value, 3f);
-                SyncPosition(Position.Value);
             }
         }).AddTo(_disposables);
     }
