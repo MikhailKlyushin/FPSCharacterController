@@ -28,13 +28,19 @@ public class CharacterNetworkView : BaseCharacterNetworkView
         {
             if (IsOwner)
             {
+                Position.Value = transform.position;
+                Debug.Log(Position.Value);
+
+                Rotation.Value = _rotateClient;
+
                 Velocity.Value = _velocityClient;
-                Rotate.Value = _rotateClient;
+
                 DirectionHorizontal.Value = _directionHorizontalClient;
                 DirectionVertical.Value = _directionVerticalClient;
 
-                SetCharacterMove(Velocity.Value, Rotate.Value);
+                SetCharacterMove(Rotation.Value ,Velocity.Value);
                 SetAnimatorParams(DirectionHorizontal.Value, DirectionVertical.Value, 3f);
+                SyncPosition(Position.Value);
             }
         }).AddTo(_disposables);
     }

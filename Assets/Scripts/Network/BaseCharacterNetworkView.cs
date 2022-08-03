@@ -1,9 +1,8 @@
 using UniRx;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(NetworkAnimator))]
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 
 public class BaseCharacterNetworkView : NetworkBehaviour, IIdentified
 {
@@ -11,10 +10,9 @@ public class BaseCharacterNetworkView : NetworkBehaviour, IIdentified
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Quaternion> Rotation = new NetworkVariable<Quaternion>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
+
+
     public NetworkVariable<Vector3> Velocity = new NetworkVariable<Vector3>(default, 
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<Quaternion> Rotate = new NetworkVariable<Quaternion>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     
     public NetworkVariable<float> DirectionHorizontal = new NetworkVariable<float>(default, 
@@ -46,26 +44,26 @@ public class BaseCharacterNetworkView : NetworkBehaviour, IIdentified
         _animator = GetComponent<Animator>();
     }
 
-    public void SetID(string id)
+    protected void SetID(string id)
     {
         _characterID = id;
     }
 
-    public void SetCharacterMove(Vector3 velocity, Quaternion rotate)
+    protected void SetCharacterMove(Quaternion rotate, Vector3 velocity)
     {
         _rigidbody.velocity = transform.TransformDirection(velocity);
-        Debug.DrawRay(transform.position, velocity, Color.green);
-
         transform.rotation = Quaternion.Lerp(transform.rotation, rotate, 0.4f);
     }
 
-    public void SetAnimatorParams(float directionHorizontal, float directionVertical, float speed)
+    protected void SetAnimatorParams(float directionHorizontal, float directionVertical, float speed)
     {
-        var networkAnimator = GetComponent<NetworkAnimator>();
-        networkAnimator.Animator.speed = speed;
-        
         _animator.SetFloat(_horizontal, directionHorizontal);
         _animator.SetFloat(_vertical, directionVertical);
         _animator.speed = speed;
+    }
+
+    protected void SyncPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 }

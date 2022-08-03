@@ -17,7 +17,7 @@ public class GhostCharacterNetworkView : BaseCharacterNetworkView
 
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
-            SetCharacterMove(view.Velocity.Value, view.Rotate.Value);
+            SetCharacterMove(view.Rotation.Value, view.Velocity.Value);
             SetAnimatorParams(view.DirectionHorizontal.Value, view.DirectionVertical.Value, 3f);
         }).AddTo(_disposables);
     }
