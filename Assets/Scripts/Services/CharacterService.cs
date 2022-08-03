@@ -6,23 +6,23 @@ public class CharacterService
     private readonly Storage<CharacterModel> _characterStorage;
     private readonly Storage<CharacterView> _viewStorage;
 
-    private readonly PlayerModelFactory _playerModelFactory;
-    private readonly PlayerViewFactory _playerViewFactory;
+    private readonly CharacterModelFactory _characterModelFactory;
+    private readonly CharacterViewFactory _characterViewFactory;
     private readonly PlayerCameraFactory _playerCameraFactory;
 
     private CharacterService
     (
         Storage<CharacterModel> characterStorage, 
         Storage<CharacterView> viewStorage,
-        PlayerModelFactory playerModelFactory, 
-        PlayerViewFactory playerViewFactory,
+        CharacterModelFactory characterModelFactory, 
+        CharacterViewFactory characterViewFactory,
         PlayerCameraFactory playerCameraFactory)
     {
         _characterStorage = characterStorage;
         _viewStorage = viewStorage;
         
-        _playerModelFactory = playerModelFactory;
-        _playerViewFactory = playerViewFactory;
+        _characterModelFactory = characterModelFactory;
+        _characterViewFactory = characterViewFactory;
         _playerCameraFactory = playerCameraFactory;
     }
     
@@ -65,27 +65,31 @@ public class CharacterService
 
         return view.ID;
     }
-
-    public CharacterModel CreateAndGetModelForNetworkPlayer()
+    
+    public GameObject AddParamsForNetworkPlayer(GameObject playerObject)
     {
-        return CreateModel();
+        var model = CreateModel();
+        var view = playerObject.GetComponent<CharacterNetworkView>();
+        view.SetModel(model);
+
+        return playerObject;
     }
 
     private CharacterModel CreateModel()
     {
-        var playerModel = _playerModelFactory.Create();
+        var model = _characterModelFactory.Create();
 
-        _characterStorage.Add(playerModel);
+        _characterStorage.Add(model);
 
-        return playerModel;
+        return model;
     }
 
     private CharacterView CreateView(CharacterModel model)
     {
-        var playerView = _playerViewFactory.Create(model);
-        _viewStorage.Add(playerView);
+        var view = _characterViewFactory.Create(model);
+        _viewStorage.Add(view);
 
-        return playerView;
+        return view;
     }
     
 }

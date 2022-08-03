@@ -6,8 +6,8 @@ public class SceneInstaller : MonoInstaller
     {
         Container.Bind(typeof(IInputProvider), typeof(IInitializable)).To<InputKeyAndMouse>().AsSingle();
 
-        Container.BindFactory<CharacterModel, PlayerModelFactory>().AsSingle();
-        Container.BindFactory<CharacterView, PlayerViewFactory>().AsSingle();
+        Container.BindFactory<CharacterModel, CharacterModelFactory>().AsSingle();
+        Container.BindFactory<CharacterView, CharacterViewFactory>().AsSingle();
         Container.BindFactory<CharacterCameraView, PlayerCameraFactory>().AsSingle();
 
         Container.Bind<CharacterService>().AsSingle();

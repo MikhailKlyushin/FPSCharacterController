@@ -3,12 +3,12 @@ using Zenject;
 
 public class InitializationPlayer : MonoBehaviour
 {
-    private CharacterService _playerService;
+    private CharacterService _characterService;
     
     [Inject]
     public void Construct(CharacterService service)
     {
-        _playerService = service;
+        _characterService = service;
     }
 
     private void Start()
@@ -18,8 +18,8 @@ public class InitializationPlayer : MonoBehaviour
 
     private void CameraTrackingMode()
     {
-        var playerID = _playerService.CreateSinglePlayer();
-        var playerView = _playerService.GetView(playerID);
-        var cameraView = _playerService.CreatePlayerCamera(playerView.transform);
+        var playerID = _characterService.CreateSinglePlayer();
+        var playerView = _characterService.GetView(playerID);
+        var cameraView = _characterService.CreatePlayerCamera(playerView.transform);
     }
 }

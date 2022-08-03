@@ -26,7 +26,7 @@ public class CreateClientPlayerNetworkRule : IInitializable
             _spawnedPlayerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
             _playerObject = _spawnedPlayerObject.gameObject;
 
-            SetParamsNetworkPlayerCharacter();
+            _playerObject = _characterService.AddParamsForNetworkPlayer(_playerObject);
         };
 
         NetworkManager.Singleton.OnClientDisconnectCallback += clientId =>
@@ -36,16 +36,5 @@ public class CreateClientPlayerNetworkRule : IInitializable
                 _spawnedPlayerObject.Despawn();
             }
         };
-    }
-    
-    private void SetParamsNetworkPlayerCharacter()
-    {
-        //var cameraView = _playerService.CreatePlayerCamera(playerObject.transform);
-        var model = _characterService.CreateAndGetModelForNetworkPlayer();
-        var view = _playerObject.GetComponent<CharacterNetworkView>();
-        view.SetModel(model);
-                
-        Debug.Log("Model ID = " + model.ID);
-        Debug.Log("View ID = " + view.ID);
     }
 }

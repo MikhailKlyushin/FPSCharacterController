@@ -1,10 +1,10 @@
 using Zenject;
 
-public class PlayerModelFactory : PlaceholderFactory<CharacterModel>
+public class CharacterModelFactory : PlaceholderFactory<CharacterModel>
 {
     private readonly DiContainer _container;
 
-    public PlayerModelFactory(DiContainer container)
+    public CharacterModelFactory(DiContainer container)
     {
         _container = container;
     }
