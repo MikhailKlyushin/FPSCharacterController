@@ -1,6 +1,5 @@
 using UniRx;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 [RequireComponent(typeof(CharacterNetworkView))]
@@ -16,10 +15,12 @@ public class GhostCharacterNetworkView : BaseCharacterNetworkView
 
         var view = GetComponent<CharacterNetworkView>();
 
+        // synchronization
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
-            SetCharacterMove(view.Velocity.Value,view.Position.Value, view.Rotation.Value);
-            SetAnimatorParams(view.DirectionHorizontal.Value, view.DirectionVertical.Value, 3f);
+            SetSyncCharacterMove(view.Velocity.Value, view.Rotation.Value);
+            SetSyncAnimatorParams(view.DirectionHorizontal.Value, view.DirectionVertical.Value, 3f);
+            SetSyncCharacterPosition(view.Position.Value);
         }).AddTo(_disposables);
     }
 }

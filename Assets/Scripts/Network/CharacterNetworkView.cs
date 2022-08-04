@@ -38,7 +38,7 @@ public class CharacterNetworkView : BaseCharacterNetworkView
         model.Velocity.Subscribe(velocity => { _velocityClient = velocity; }).AddTo(_disposables);
         model.RotateY.Subscribe(rotate => { _rotateClient = rotate; }).AddTo(_disposables);
         
-        
+        // synchronization
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
             if (IsOwner)
@@ -46,14 +46,14 @@ public class CharacterNetworkView : BaseCharacterNetworkView
                 Position.Value = transform.position;
                 
                 Rotation.Value = _rotateClient;
-
                 Velocity.Value = _velocityClient;
+                
+                SetSyncCharacterMove(Velocity.Value, Rotation.Value);
 
                 DirectionHorizontal.Value = _directionHorizontalClient;
                 DirectionVertical.Value = _directionVerticalClient;
-
-                SetCharacterMove( Velocity.Value,Position.Value,Rotation.Value);
-                SetAnimatorParams(DirectionHorizontal.Value, DirectionVertical.Value, 3f);
+                
+                SetSyncAnimatorParams(DirectionHorizontal.Value, DirectionVertical.Value, 3f);
             }
         }).AddTo(_disposables);
     }

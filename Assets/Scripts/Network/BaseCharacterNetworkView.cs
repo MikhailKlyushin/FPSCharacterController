@@ -35,14 +35,18 @@ public class BaseCharacterNetworkView : NetworkBehaviour, IIdentified
         _characterID = id;
     }
 
-    protected void SetCharacterMove(Vector3 velocity, Vector3 position, Quaternion rotate)
+    protected void SetSyncCharacterMove(Vector3 velocity, Quaternion rotate)
     {
         _rigidbody.velocity = transform.TransformDirection(velocity);
-        transform.position = Vector3.Lerp(transform.position, position, 0.4f);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotate, 0.4f);
     }
+    
+    protected void SetSyncCharacterPosition(Vector3 position)
+    {
+        transform.position = Vector3.Lerp(transform.position, position, 0.4f);
+    }
 
-    protected void SetAnimatorParams(float directionHorizontal, float directionVertical, float speed)
+    protected void SetSyncAnimatorParams(float directionHorizontal, float directionVertical, float speed)
     {
         _animator.SetFloat(_horizontal, directionHorizontal);
         _animator.SetFloat(_vertical, directionVertical);
