@@ -1,21 +1,15 @@
 using UniRx;
 using UnityEngine;
 
-
-[RequireComponent(typeof(CharacterNetworkView))]
-
-public class GhostCharacterNetworkView : BaseCharacterNetworkView
+public class ReadNetworkViewThread : BaseCharacterNetworkView, INetworkViewThread
 {
-    public override void OnNetworkSpawn()
+    public void SetModel(ICharacterModel model)
     {
-        if (IsOwner)
-        {
-            Destroy(this);
-        }
+        Debug.Log("Model this not used!");
+    }
 
-        var state = GetComponent<CharacterState>();
-
-        // synchronization
+    public void StartThread(CharacterNetworkState state)
+    {
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
             SetSyncCharacterMove(state.Velocity.Value, state.Rotation.Value);

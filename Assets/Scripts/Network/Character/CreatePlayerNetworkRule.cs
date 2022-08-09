@@ -21,8 +21,7 @@ public class CreateClientPlayerNetworkRule : IInitializable
         NetworkManager.Singleton.OnClientConnectedCallback += clientId =>
         {
             _clientId = clientId;
-            Debug.Log("Client ID = " + clientId);
-            
+
             _spawnedPlayerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(clientId);
             _playerObject = _spawnedPlayerObject.gameObject;
 
