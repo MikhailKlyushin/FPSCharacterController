@@ -13,14 +13,14 @@ public class GhostCharacterNetworkView : BaseCharacterNetworkView
             Destroy(this);
         }
 
-        var view = GetComponent<CharacterNetworkView>();
+        var state = GetComponent<CharacterState>();
 
         // synchronization
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
-            SetSyncCharacterMove(view.Velocity.Value, view.Rotation.Value);
-            SetSyncAnimatorParams(view.DirectionHorizontal.Value, view.DirectionVertical.Value, 3f);
-            SetSyncCharacterPosition(view.Position.Value);
+            SetSyncCharacterMove(state.Velocity.Value, state.Rotation.Value);
+            SetSyncAnimatorParams(state.DirectionHorizontal.Value, state.DirectionVertical.Value, 3f);
+            SetSyncCharacterPosition(state.Position.Value);
         }).AddTo(_disposables);
     }
 }

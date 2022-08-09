@@ -2,32 +2,22 @@ using UniRx;
 using Unity.Netcode;
 using UnityEngine;
 
-
+[RequireComponent(typeof(CharacterState))]
 public class CharacterNetworkView : BaseCharacterNetworkView
 {
-    public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>(default, 
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<Quaternion> Rotation = new NetworkVariable<Quaternion>(default, 
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
-
-    public NetworkVariable<Vector3> Velocity = new NetworkVariable<Vector3>(default, 
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
-    public NetworkVariable<float> DirectionHorizontal = new NetworkVariable<float>(default, 
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> DirectionVertical = new NetworkVariable<float>(default, 
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
     private Vector3 _velocityClient;
     private Quaternion _rotateClient;
     
     private float _directionHorizontalClient;
     private float _directionVerticalClient;
+
+    private CharacterState _state;
     
     public void SetModel(ICharacterModel model)
     {
         SetID(model.ID);
+
+        _state = GetComponent<CharacterState>();
 
         model.InputVector.Subscribe(inputVector =>
         {
@@ -43,17 +33,17 @@ public class CharacterNetworkView : BaseCharacterNetworkView
         {
             if (IsOwner)
             {
-                Position.Value = transform.position;
+                _state.Position.Value = transform.position;
                 
-                Rotation.Value = _rotateClient;
-                Velocity.Value = _velocityClient;
+                _state.Rotation.Value = _rotateClient;
+                _state.Velocity.Value = _velocityClient;
                 
-                SetSyncCharacterMove(Velocity.Value, Rotation.Value);
+                SetSyncCharacterMove(_state.Velocity.Value, _state.Rotation.Value);
 
-                DirectionHorizontal.Value = _directionHorizontalClient;
-                DirectionVertical.Value = _directionVerticalClient;
+                _state.DirectionHorizontal.Value = _directionHorizontalClient;
+                _state.DirectionVertical.Value = _directionVerticalClient;
                 
-                SetSyncAnimatorParams(DirectionHorizontal.Value, DirectionVertical.Value, 3f);
+                SetSyncAnimatorParams(_state.DirectionHorizontal.Value, _state.DirectionVertical.Value, 3f);
             }
         }).AddTo(_disposables);
     }

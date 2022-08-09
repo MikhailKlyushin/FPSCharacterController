@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UniRx;
 using Unity.Netcode;
 using UnityEngine;
