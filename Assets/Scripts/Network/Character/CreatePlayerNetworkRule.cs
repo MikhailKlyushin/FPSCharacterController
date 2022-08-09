@@ -29,7 +29,8 @@ public class CreateClientPlayerNetworkRule : IInitializable
 
             if (_spawnedPlayerObject.IsOwner)
             {
-                var cameraView = _characterService.CreatePlayerCamera(_spawnedPlayerObject.transform);
+                //var camera = _spawnedPlayerObject.GetComponent<CameraFollow>();
+                //var cameraView = _characterService.CreatePlayerCamera(_spawnedPlayerObject.transform);
             }
         };
 

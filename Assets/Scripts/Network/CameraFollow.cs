@@ -10,7 +10,14 @@ public class CameraFollow : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        _camera.Follow = transform;
-        Instantiate(_camera);
+        if (IsOwner)
+        {
+            _camera.Follow = transform;
+            Instantiate(_camera);
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 }
