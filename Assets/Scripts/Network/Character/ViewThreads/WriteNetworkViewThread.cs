@@ -41,6 +41,6 @@ public class WriteNetworkViewThread : BaseSyncCharacter, INetworkViewThread
             state.DirectionVertical.Value = _directionVerticalClient;
 
             SetSyncAnimatorParams(animator, state.DirectionHorizontal.Value, state.DirectionVertical.Value, 3f);
-        }).AddTo(_disposables);
+        }).AddTo(transform);
     }
 }

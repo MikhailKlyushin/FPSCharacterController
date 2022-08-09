@@ -9,6 +9,7 @@ public class CharacterNetworkView : NetworkBehaviour
 
     private string _characterID;
 
+    private Transform _transform;
     private Rigidbody _rigidbody;
 
     private Animator _animator;
@@ -25,6 +26,7 @@ public class CharacterNetworkView : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        _transform = GetComponent<Transform>();
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _state = GetComponent<CharacterNetworkParams>();
@@ -32,7 +34,7 @@ public class CharacterNetworkView : NetworkBehaviour
         if (!IsOwner)   // server
         {
             _thread =  new ReadNetworkViewThread();
-            _thread.StartThread(transform, _rigidbody, _animator, _state);
+            _thread.StartThread(_transform, _rigidbody, _animator, _state);
         }
     }
 
@@ -43,7 +45,7 @@ public class CharacterNetworkView : NetworkBehaviour
         {
             _thread = new WriteNetworkViewThread();
             _thread.SetModel(model);
-            _thread.StartThread(transform, _rigidbody, _animator, _state);
+            _thread.StartThread(_transform, _rigidbody, _animator, _state);
         }
     }
 }

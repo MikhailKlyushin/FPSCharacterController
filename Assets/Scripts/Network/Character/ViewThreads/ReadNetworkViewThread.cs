@@ -10,11 +10,13 @@ public class ReadNetworkViewThread : BaseSyncCharacter, INetworkViewThread
 
     public void StartThread(Transform transform, Rigidbody rigidbody, Animator animator, CharacterNetworkParams state)
     {
+        
         Observable.EveryFixedUpdate().Subscribe(_ =>
         {
             SetSyncCharacterMove(transform, rigidbody, state.Velocity.Value, state.Rotation.Value);
             SetSyncAnimatorParams(animator, state.DirectionHorizontal.Value, state.DirectionVertical.Value, 3f);
             SetSyncCharacterPosition(transform, state.Position.Value);
-        }).AddTo(_disposables);
+        }).AddTo(transform);
+
     }
 }
