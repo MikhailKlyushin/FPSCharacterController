@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class CharacterNetworkState : NetworkBehaviour
+public class CharacterNetworkParams : NetworkBehaviour
 {
     public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);

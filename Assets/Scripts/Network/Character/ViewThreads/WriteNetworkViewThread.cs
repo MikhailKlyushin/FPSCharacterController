@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WriteNetworkViewThread : BaseCharacterNetworkView, INetworkViewThread
+public class WriteNetworkViewThread : BaseSyncCharacter, INetworkViewThread
 {
     private Vector3 _velocityClient;
     private Quaternion _rotateClient;
@@ -14,8 +14,6 @@ public class WriteNetworkViewThread : BaseCharacterNetworkView, INetworkViewThre
 
     public void SetModel(ICharacterModel model)
     {
-        SetID(model.ID);
-
         model.InputVector.Subscribe(inputVector =>
         {
             _directionHorizontalClient = inputVector.x;
@@ -26,7 +24,7 @@ public class WriteNetworkViewThread : BaseCharacterNetworkView, INetworkViewThre
         model.RotateY.Subscribe(rotate => { _rotateClient = rotate; }).AddTo(_disposables);
     }
 
-    public void StartThread(CharacterNetworkState state)
+    public void StartThread(Transform transform, Rigidbody rigidbody, Animator animator, CharacterNetworkParams state)
     {
         // synchronization
         Observable.EveryFixedUpdate().Subscribe(_ =>
@@ -37,12 +35,12 @@ public class WriteNetworkViewThread : BaseCharacterNetworkView, INetworkViewThre
             state.Rotation.Value = _rotateClient;
             state.Velocity.Value = _velocityClient;
 
-            SetSyncCharacterMove(state.Velocity.Value, state.Rotation.Value);
+            SetSyncCharacterMove(transform, rigidbody, state.Velocity.Value, state.Rotation.Value);
 
             state.DirectionHorizontal.Value = _directionHorizontalClient;
             state.DirectionVertical.Value = _directionVerticalClient;
 
-            SetSyncAnimatorParams(state.DirectionHorizontal.Value, state.DirectionVertical.Value, 3f);
+            SetSyncAnimatorParams(animator, state.DirectionHorizontal.Value, state.DirectionVertical.Value, 3f);
         }).AddTo(_disposables);
     }
 }
