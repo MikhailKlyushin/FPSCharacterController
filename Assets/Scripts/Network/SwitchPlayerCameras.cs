@@ -48,4 +48,9 @@ public class SwitchPlayerCameras: NetworkBehaviour
             }
         };
     }
+
+    public override void OnDestroy()
+    {
+        _inputControl.Disable();
+    }
 }
