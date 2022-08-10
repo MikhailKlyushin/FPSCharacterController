@@ -38,19 +38,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &2293336128970647761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691551867302666743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68442c5a7123f9042b94a02eecd88643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 3934446448007941442, guid: d07b0e5bc4dbc5246b2d30290d0c7ea8, type: 3}
 --- !u!114 &5616234982763697975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +50,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2b5ded82c125840a33469c2e703eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1571552142063662815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691551867302666743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38f1479bf0bd1e49aaa56ea5e2b019d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveCamera: {fileID: 3934446448007941442, guid: d07b0e5bc4dbc5246b2d30290d0c7ea8, type: 3}
+  _aimingCamera: {fileID: 7922477436442931417, guid: 3bba94a7f677d4f42b99d3cf9f38f397, type: 3}
 --- !u!1001 &5164667143311610832
 PrefabInstance:
   m_ObjectHideFlags: 0

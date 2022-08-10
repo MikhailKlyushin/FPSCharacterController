@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: d38f1479bf0bd1e49aaa56ea5e2b019d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _moveCamera: {fileID: 3934446448007941442, guid: d07b0e5bc4dbc5246b2d30290d0c7ea8, type: 3}
+  - _aimingCamera: {fileID: 7922477436442931417, guid: 3bba94a7f677d4f42b99d3cf9f38f397, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
