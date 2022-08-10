@@ -16,7 +16,7 @@ public class WeaponNetwork : MonoBehaviour
     private bool onClickShoot = false;
     private bool isShoot = false;
 
-    private float _timeNextShoot;
+    private float _timeNextShoot = 0f;
     private float _timeOneShoot = 0.1f;
 
     private void Start()
@@ -35,19 +35,10 @@ public class WeaponNetwork : MonoBehaviour
         
         Observable.EveryUpdate().Subscribe(_ =>
         {
-            if (onClickShoot)
+            if (onClickShoot && (Time.time >= _timeNextShoot))
             {
-                if (!isShoot)
-                {
-                    isShoot = true;
-                    _timeNextShoot = Time.time + _timeOneShoot;
-                    Shoot();
-                }
-                else if (isShoot && (Time.time >= _timeNextShoot))
-                {
-                    _timeNextShoot = Time.time + _timeOneShoot;
-                    Shoot();
-                }
+                _timeNextShoot = Time.time + _timeOneShoot;
+                Shoot();
             }
 
         }).AddTo(transform);
