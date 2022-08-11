@@ -1,3 +1,5 @@
+using System;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -15,5 +17,8 @@ public class CharacterNetworkParams : NetworkBehaviour
     public NetworkVariable<float> DirectionHorizontal = new NetworkVariable<float>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> DirectionVertical = new NetworkVariable<float>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
+    public NetworkVariable<short> Health = new NetworkVariable<short>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 }

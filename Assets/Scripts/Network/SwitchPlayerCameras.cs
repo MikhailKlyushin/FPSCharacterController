@@ -17,6 +17,8 @@ public class SwitchPlayerCameras: NetworkBehaviour
     {
         if (IsOwner)
         {
+            _inputControl = new InputControl();
+            _inputControl.Enable();
             _moveCamera.Follow = transform;
             _aimingCamera.Follow = transform;
             _moveCameraObject = Instantiate(_moveCamera.gameObject);
@@ -30,10 +32,6 @@ public class SwitchPlayerCameras: NetworkBehaviour
 
     private void Start()
     {
-        _inputControl = new InputControl();
-        _inputControl.Enable();
-        
-        
         _inputControl.Player.Aiming.performed += context =>
         {
             isAimingState = !isAimingState;
@@ -51,6 +49,9 @@ public class SwitchPlayerCameras: NetworkBehaviour
 
     public override void OnDestroy()
     {
-        _inputControl.Disable();
+        if (IsOwner)
+        {
+            _inputControl.Disable();
+        }
     }
 }

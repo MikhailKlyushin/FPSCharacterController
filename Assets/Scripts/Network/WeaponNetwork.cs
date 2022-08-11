@@ -1,20 +1,17 @@
-using System;
-using System.Collections;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
 public class WeaponNetwork : MonoBehaviour
 {
-
-    private int _bulletsTotal = 30;
-    private int _bulletsActual;
+    [SerializeField] private Transform _raycastPoint;
+    
+    private short _bulletsTotal = 30;
+    private short _bulletsActual;
+    private short _weaponDamage = 25;
+    
 
     private InputControl _inputControl;
-    private bool onClickShoot = false;
-    private bool isShoot = false;
+    private bool _onClickShoot = false;
 
     private float _timeNextShoot = 0f;
     private float _timeOneShoot = 0.1f;
@@ -29,13 +26,13 @@ public class WeaponNetwork : MonoBehaviour
 
         _inputControl.Player.Attack.started += context =>
         {
-            onClickShoot = true;
+            _onClickShoot = true;
         };
-        _inputControl.Player.Attack.canceled += context => { onClickShoot = false; };
+        _inputControl.Player.Attack.canceled += context => { _onClickShoot = false; };
         
         Observable.EveryUpdate().Subscribe(_ =>
         {
-            if (onClickShoot && (Time.time >= _timeNextShoot))
+            if (_onClickShoot && (Time.time >= _timeNextShoot))
             {
                 _timeNextShoot = Time.time + _timeOneShoot;
                 Shoot();
@@ -46,7 +43,25 @@ public class WeaponNetwork : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Shooted!!!!!!!!!!" + Time.time);
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(_raycastPoint.position, _raycastPoint.forward, out hit))
+        {
+            //Debug.DrawRay(_raycastPoint.position, _raycastPoint.forward * hit.distance, Color.green);
+            GameObject hitObject = hit.transform.gameObject;
+            CharacterNetworkHealth health = hitObject.GetComponent<CharacterNetworkHealth>();
+
+            if (health != null)
+            {
+                health.Remove(_weaponDamage);
+                Debug.Log(health.gameObject);
+            }
+            Debug.Log("Did Hit");
+        }
+        else
+        {
+            Debug.DrawRay(_raycastPoint.position, _raycastPoint.forward * 1000, Color.red);
+            Debug.Log("Did not Hit");
+        }
     }
-    
 }
