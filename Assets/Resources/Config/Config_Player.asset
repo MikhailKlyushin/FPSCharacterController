@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50ff47545592924b8fd2fe5aae8fa46, type: 3}
-  m_Name: CharacterViewConfig
+  m_Script: {fileID: 11500000, guid: 8957922d03f0ddc42908021c71f8dddc, type: 3}
+  m_Name: Config_Player
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 5635260585884856871, guid: e9d255bb9c04c8e4cbb4fa9f22c87279, type: 3}
+  _moveSpeed: 3
+  _sensitivityHorizontal: 500

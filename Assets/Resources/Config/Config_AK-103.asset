@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0772d6d2e34304c4884112ce27648e3a, type: 3}
-  m_Name: InputKeyAndMouseConfig
+  m_Script: {fileID: 11500000, guid: f958a8ffde13483498d57599efe17ac5, type: 3}
+  m_Name: Config_AK-103
   m_EditorClassIdentifier: 
-  _blindSpot: 0.2
+  _weaponDamage: 25
+  _bulletsTotal: 30
+  _bulletsPerMinutes: 600
