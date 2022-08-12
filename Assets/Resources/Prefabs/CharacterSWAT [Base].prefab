@@ -1013,7 +1013,6 @@ Transform:
   - {fileID: 5635260584640238022}
   - {fileID: 5635260585983887395}
   - {fileID: 5635260585542440335}
-  - {fileID: 5970164755955185880}
   m_Father: {fileID: 5635260585116736731}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1579,6 +1578,7 @@ Transform:
   m_Children:
   - {fileID: 5635260584301742145}
   - {fileID: 5635260584594814081}
+  - {fileID: 5970164755955185880}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2270,6 +2270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5970164755955185880}
+  - component: {fileID: 5754150015606330519}
   m_Layer: 0
   m_Name: WeaponHandPosition
   m_TagString: Untagged
@@ -2284,10 +2285,36 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5966850766234568292}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.48073623, y: 0.5085999, z: -0.5264912, w: 0.48272762}
+  m_LocalPosition: {x: 0.6926388, y: 1.4294695, z: -0.04749507}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5635260585267837011}
-  m_RootOrder: 5
+  m_Father: {fileID: 5635260585884856867}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1773428102 &5754150015606330519
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5966850766234568292}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0.6926388, y: 1.4294695, z: -0.04749507}
+  m_RotationAtRest: {x: 88.541306, y: -36.596207, z: -130.70135}
+  m_TranslationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 5635260585267837011}
+    weight: 1
