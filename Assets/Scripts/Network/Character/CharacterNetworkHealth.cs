@@ -5,56 +5,68 @@ public class CharacterNetworkHealth : NetworkBehaviour
 {
     [SerializeField] private CharacterConfig _config;
 
-    public short Health;
-    
     private CharacterNetworkParams _state;
 
-    void Start()
+    private short _health = 0;
+
+    public override void OnNetworkSpawn()
     {
+        _health = _config.MaxHealth;
         _state = GetComponent<CharacterNetworkParams>();
+        
         if (IsOwner)
-            _state.Health.Value = _config.MaxHealth;
+        {
+            _state.Health.Value = _health;
+        }
     }
 
-    /*public void Add(short value)
+    public void Remove(short value)
     {
-        var tmpHealth = _state.Health.Value + value;
-
-        if (tmpHealth <= _config.MaxHealth)
+        if (!IsServer)  // client
         {
-            _state.Health.Value += value;
+            GetDamageServerRPC(value);
+        }
+        else            // server
+        {
+            GetDamageClientRPC(value);
+        }
+            
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void GetDamageServerRPC(short value)
+    {
+        GetDamage(value);
+    }
+
+    [ClientRpc]
+    private void GetDamageClientRPC(short value)
+    {
+        if (IsOwner)
+        {
+            GetDamage(value);
+        }
+    }
+
+    private void GetDamage(short value)
+    {
+        var tmpHealth = _health - value;
+
+        if (tmpHealth < 0)
+        {
+            _health = 0;
         }
         else
         {
-            _state.Health.Value = _config.MaxHealth;
+            _health -= value;
         }
-    }*/
-    
-    public void Remove(short value)
-    {
-        if (IsOwner)
-            RemoveHealthServerRpc(value);
+
+        _state.Health.Value = _health;
     }
+
 
     private void Update()
     {
-        Health = _state.Health.Value;
-        Debug.Log("Helthlocal = " + _state.Health.Value);
-        Debug.Log("Helth = " + _state.Health.Value);
-    }
-    
-    [ServerRpc]
-    public void RemoveHealthServerRpc(short value)
-    {
-        var tmpHealth = _state.Health.Value + value;
-
-        if (tmpHealth <= _config.MaxHealth)
-        {
-            _state.Health.Value += value;
-        }
-        else
-        {
-            _state.Health.Value = _config.MaxHealth;
-        }
+        Debug.Log("HelthVariable = " + _state.Health.Value + "  " + OwnerClientId);
     }
 }

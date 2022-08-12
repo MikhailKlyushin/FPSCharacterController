@@ -1,4 +1,3 @@
-using Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 using Zenject;
@@ -26,12 +25,6 @@ public class CreateClientPlayerNetworkRule : IInitializable
             _playerObject = _spawnedPlayerObject.gameObject;
 
             _playerObject = _characterService.AddParamsForNetworkPlayer(_playerObject);
-
-            if (_spawnedPlayerObject.IsOwner)
-            {
-                //var camera = _spawnedPlayerObject.GetComponent<CameraFollow>();
-                //var cameraView = _characterService.CreatePlayerCamera(_spawnedPlayerObject.transform);
-            }
         };
 
         NetworkManager.Singleton.OnClientDisconnectCallback += clientId =>

@@ -1,7 +1,8 @@
 using UniRx;
+using Unity.Netcode;
 using UnityEngine;
 
-public class WeaponNetwork : MonoBehaviour
+public class WeaponNetwork : NetworkBehaviour
 {
     [SerializeField] private Transform _raycastPoint;
     
@@ -18,27 +19,27 @@ public class WeaponNetwork : MonoBehaviour
 
     private void Start()
     {
-        _inputControl = new InputControl();
-        _inputControl.Enable();
-
-        _bulletsActual = _bulletsTotal;
-
-
-        _inputControl.Player.Attack.started += context =>
+        if (IsOwner)
         {
-            _onClickShoot = true;
-        };
-        _inputControl.Player.Attack.canceled += context => { _onClickShoot = false; };
-        
-        Observable.EveryUpdate().Subscribe(_ =>
-        {
-            if (_onClickShoot && (Time.time >= _timeNextShoot))
+            _inputControl = new InputControl();
+            _inputControl.Enable();
+
+            _bulletsActual = _bulletsTotal;
+
+
+            _inputControl.Player.Attack.started += context => { _onClickShoot = true; };
+            _inputControl.Player.Attack.canceled += context => { _onClickShoot = false; };
+
+            Observable.EveryUpdate().Subscribe(_ =>
             {
-                _timeNextShoot = Time.time + _timeOneShoot;
-                Shoot();
-            }
+                if (_onClickShoot && (Time.time >= _timeNextShoot))
+                {
+                    _timeNextShoot = Time.time + _timeOneShoot;
+                    Shoot();
+                }
 
-        }).AddTo(transform);
+            }).AddTo(transform);
+        }
     }
 
     private void Shoot()
