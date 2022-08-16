@@ -19,4 +19,7 @@ public class CharacterNetworkParams : NetworkBehaviour
     
     public NetworkVariable<short> Health = new NetworkVariable<short>(default, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
+    public NetworkVariable<short> ActualBullets = new NetworkVariable<short>(default, 
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 }

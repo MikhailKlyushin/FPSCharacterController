@@ -1,10 +1,10 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class HealthBar : MonoBehaviour
+public class UI_CharacterHealthBar : NetworkBehaviour
 {
-    //TODO: Rewrite! 
-    [SerializeField] private Transform _transformToFollow;
+    [SerializeField] private GameObject _characterGameObject;
     
     private VisualElement _healthBar;
     private VisualElement _healthBarProgress;
@@ -16,6 +16,12 @@ public class HealthBar : MonoBehaviour
     
     private void Start()
     {
+        if (IsOwner)
+        {
+            GetComponent<UIDocument>().enabled = false;
+            this.enabled = false;
+        }
+        
         _camera = Camera.main;
         
         _healthBar = GetComponent<UIDocument>().rootVisualElement.Q("Container");
@@ -24,26 +30,25 @@ public class HealthBar : MonoBehaviour
 
         Debug.Log(" _healthBarProgress.style.width = " + _healthBarProgress.style.maxWidth);
 
-        _state = GetComponent<CharacterNetworkParams>();
+        //todo: question
+        //_state = _characterGameObject.GetComponent<CharacterNetworkParams>();
+        _state = GetComponentInParent<CharacterNetworkParams>();
     }
-    
+
     private void LateUpdate()
     {
-        if (_transformToFollow != null)
-        {
-            SetPosition();
-            SetHealthBarPercent(_state.Health.Value);
-        }
+
+        SetPosition();
+        SetHealthBarPercent(_state.Health.Value);
     }
 
     private void SetPosition()
     {
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel (
-            _healthBar.panel, _transformToFollow.position, _camera);
+            _healthBar.panel, this.transform.position, _camera);
         
         newPosition = new Vector3(newPosition.x - _healthBar.layout.width / 2, newPosition.y, 0f);
         _healthBar.transform.position = new Vector3(newPosition.x, newPosition.y, 0);
-        //_healthBar.transform.position = Vector3.Lerp(_healthBar.transform.position, newPosition, 0.3f);
 
     }
     

@@ -8,6 +8,9 @@ public class WeaponNetwork : MonoBehaviour
     [SerializeField] private Transform _raycastPoint;
     [SerializeField] private WeaponConfig _config;
 
+    public short BulletActual => _bulletsActual;
+    public short BulletTotal => _config.BulletsTotal;
+
     private InputControl _inputControl;
     
     private bool _onClickShoot = false;
