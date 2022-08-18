@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UIDocument = UnityEngine.UIElements.UIDocument;
 
 public class PlayerUI : NetworkBehaviour
 {
