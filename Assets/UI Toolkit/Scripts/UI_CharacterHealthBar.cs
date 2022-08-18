@@ -2,7 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CharacterHealthBarUI : NetworkBehaviour
+public class UI_CharacterHealthBar : NetworkBehaviour
 {
     [SerializeField] private GameObject _characterGameObject;
     
@@ -37,6 +37,7 @@ public class CharacterHealthBarUI : NetworkBehaviour
 
     private void LateUpdate()
     {
+
         SetPosition();
         SetHealthBarPercent(_state.Health.Value);
     }

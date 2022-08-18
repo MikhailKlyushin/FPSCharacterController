@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UIDocument = UnityEngine.UIElements.UIDocument;
 
-public class PlayerUI : NetworkBehaviour
+public class UI_PlayerHUD : NetworkBehaviour
 {
     [SerializeField] private WeaponNetwork _weapon;
     
